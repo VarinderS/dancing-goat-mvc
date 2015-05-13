@@ -1,0 +1,12 @@
+﻿{
+    "name": "MvcDemoConfiguration",
+    "version": "0.1.0",
+    "description": "Serves for Automation Tasks using Grunt",
+    "main": "Kentico",
+
+    "devDependencies": {
+        "grunt": "~0.4.5",
+        "grunt-contrib-less": "~0.11.0",
+        "grunt-contrib-watch": "~0.6.1"
+    }
+}

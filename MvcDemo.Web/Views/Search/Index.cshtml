@@ -1,0 +1,60 @@
+﻿@using MvcDemo.Web.Models.Pager
+@using MvcDemo.Web.Models.Search
+@model SearchResults
+
+@{
+    ViewBag.Title = "Search results for: " + Model.Query;
+}
+
+<h2>@string.Format(Resource.GetString("TestMvcDemo.Search.ResultsFor"), Model.Query)</h2>
+
+@if (Model.Items == null)
+{
+    @:@string.Format(Resource.GetString("TestMvcDemo.Search.NoResults"), Model.Query)
+}
+
+else
+{
+    foreach (var item in Model.Items)
+    {
+        <div class="row search-tile">
+            <div class="col-md-4 col-lg-3">
+                @if (item.ImageGuid != Guid.Empty)
+                {
+                    <a href="@GetUrl(item.PageTypeCodeName, item.DocumentId)" title="@item.Title"><img class="img-responsive" src="@Url.Attachment(item.ImageGuid, null)" alt="@item.Title" /></a>
+                }
+            </div>
+            <div class="col-md-8 col-lg-9 search-tile-content">
+                <h3 class="h4 search-tile-title">
+                    <a href="@GetUrl(item.PageTypeCodeName, item.DocumentId)">@item.Title</a>
+                </h3>
+                <div class="search-tile-badge">@item.PageTypeDispayName</div>
+                <div class="search-tile-subtitle">@item.Date</div>
+                <div>@Html.Raw(CMS.Helpers.HTMLHelper.StripTags(item.Content, false))</div>
+            </div>
+        </div>
+    }
+
+    @Html.Action("Index", "Pager", new PagerModel { DataSource = Model, CreateUrlForPageIndex = i => Url.Action("Index", "Search", new { searchText = Model.Query, page = i }) })
+}
+
+@helper GetUrl(string pageTypeCodeName, int documentId)
+{
+    switch (pageTypeCodeName)
+    {
+        case "TestMvcDemo.Cafe":
+            @Url.Action("Index", "Cafes")
+            break;
+        case "TestMvcDemo.Article":
+        @Url.Action("Show", "Articles", new { id = documentId })
+            break;
+        case "TestMvcDemo.AboutUsSection":
+        @Url.Action("Index", "About")
+            break;
+        case "TestMvcDemo.AboutUs":
+        @Url.Action("Index", "Home")
+            break;
+        default:
+            throw new NotImplementedException("Unknown PageType: " + pageTypeCodeName);
+    }
+}

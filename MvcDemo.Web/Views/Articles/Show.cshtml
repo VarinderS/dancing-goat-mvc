@@ -1,0 +1,24 @@
+﻿@model CMS.DocumentEngine.Types.Article
+
+@{
+    ViewBag.Title = @Model.ArticleTitle;
+}
+
+<article class="article-detail col-lg-8 col-lg-push-2">
+    <h2>@Model.ArticleTitle</h2>
+    <div class="article-detail-datetime">
+        @Model.PublicationDate.ToString("D")
+    </div>
+    <div class="row">
+        <div class="article-detail-image col-md-push-2 col-md-8">
+            <img alt="Article @Model.ArticleTitle" src="@Url.Attachment(Model.ArticleTeaser, null)" class="img-responsive">
+        </div>
+    </div>
+    <div class="row">
+        <div class="article-detail-content">
+            @Html.Raw(Model.ArticleText)
+        </div>
+    </div>
+</article>
+
+

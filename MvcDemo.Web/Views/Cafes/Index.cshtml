@@ -1,0 +1,58 @@
+﻿@model MvcDemo.Web.Models.Cafes.IndexViewModel
+
+@{
+    ViewBag.Title = Resource.GetString("TestMvcDemo.Cafes");
+}
+
+<h2>@Resource.GetString("TestMvcDemo.CompanyCafes")</h2>
+<div class="row">
+    @foreach (var cafe in Model.CompanyCafes)
+    {
+        <div class="col-md-6">
+            <div class="cafe-image-tile cursor-hand js-scroll-to-map" data-address="@cafe.Contact.City,@cafe.Contact.Street">
+                <div class="cafe-image-tile-image-wrapper">
+                    <img alt="Cafe @cafe.Contact.Name" src="@Url.Attachment(cafe.Photo, null)" class="cafe-image-tile-image">
+                </div>
+                <div class="cafe-image-tile-content">
+                    <h3 class="cafe-image-tile-name">@cafe.Contact.Name</h3>
+                    <address class="cafe-tile-address">
+                        <a href="javascript:void(0)" class="cafe-tile-address-anchor">
+                            @cafe.Contact.Street, @cafe.Contact.City
+                            <br />
+                            @cafe.Contact.ZIP, @cafe.Contact.Country, @cafe.Contact.State
+                        </a>
+                    </address>
+                    <p>@cafe.Contact.Phone</p>
+                    <p>@cafe.Note</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<h2>@Resource.GetString("TestMvcDemo.PartnerCafes.Title")</h2>
+<div class="row">
+    @foreach (var city in Model.PartnerCafes.Keys)
+    {
+        var first = true;
+        foreach (var contact in Model.PartnerCafes[city])
+        {
+            if (first)
+            {   @*Display city information only once*@
+            <h3>@contact.City, @contact.Country, @contact.State</h3>
+            }
+            <p>
+                @contact.Name, @contact.Street, @contact.Phone
+            </p>
+            first = false;
+        }
+    }
+</div>
+
+<h2 class="map-title">@Resource.GetString("TestMvcDemo.Cafes.MapTitle")</h2>
+<div class="map js-map"></div>
+
+@section Scripts {
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    @Scripts.Render("~/Scripts/map.js")
+}

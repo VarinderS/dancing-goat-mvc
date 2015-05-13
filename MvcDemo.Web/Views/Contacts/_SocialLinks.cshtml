@@ -1,0 +1,9 @@
+﻿@model IEnumerable<CMS.DocumentEngine.Types.SocialLink>
+
+@foreach (var link in Model)
+{
+    <a class="followus-link" href="@link.SocialLinkUrl" target="_blank">
+        <img title="@link.SocialLinkTitle" src="@Url.Attachment(link.SocialLinkIcon, "")" alt="@link.SocialLinkTitle" />
+    </a>
+}
+

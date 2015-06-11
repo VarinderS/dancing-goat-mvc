@@ -1,35 +1,36 @@
-﻿using System.Globalization;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
-using CMS.DocumentEngine.Types;
+using MvcDemo.Web.Repositories;
+using MvcDemo.Web.Infrastructure;
 
 namespace MvcDemo.Web.Controllers
 {
-    public class ArticlesController : BaseController
+    public class ArticlesController : Controller
     {
+        private readonly ArticleRepository mArticleRepository;
+
+
+        public ArticlesController(ArticleRepository repository)
+        {
+            mArticleRepository = repository;
+        }
+
+
         // GET: Articles
         public ActionResult Index()
         {
-            var articles = ArticleProvider.GetArticles()
-                                          .OnSite("TestMvcDemo")
-                                          .Culture(CultureInfo.CurrentUICulture.Name)
-                                          .OrderByDescending("DocumentPublishFrom");
-
-            return View(articles);
+            return View(mArticleRepository.GetLatestArticles());
         }
 
 
         // GET: Articles/Show/{id}
         public ActionResult Show(int id = 0)
         {
-            var article = ArticleProvider.GetArticles()
-                                         .WithID(id)
-                                         .Culture(CultureInfo.CurrentUICulture.Name)
-                                         .FirstObject;
+            var article = mArticleRepository.GetArticle(id);
 
             if (article == null)
             {
-                return NotFoundResult();
+                return HttpNotFound();
             }
 
             return View(article);

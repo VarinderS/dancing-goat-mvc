@@ -10,6 +10,7 @@
 //--------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 
 using CMS;
 using CMS.Helpers;
@@ -75,16 +76,11 @@ namespace CMS.DocumentEngine.Types
         /// <summary>
         /// Teaser.
         /// </summary>
-        [DatabaseField]
-        public Guid ArticleTeaser
+        public Attachment ArticleTeaser
         {
             get
             {
-                return ValidationHelper.GetGuid(GetValue("ArticleTeaser"), Guid.Empty);
-            }
-            set
-            {
-                SetValue("ArticleTeaser", value);
+                return GetFieldAttachment("ArticleTeaser");
             }
         }
 
@@ -119,6 +115,18 @@ namespace CMS.DocumentEngine.Types
             set
             {
                 SetValue("ArticleText", value);
+            }
+        }
+
+
+        /// <summary>
+        /// Images.
+        /// </summary>
+        public IEnumerable<Attachment> ArticleImages
+        {
+            get
+            {
+                return GetFieldAttachments("ArticleImages");
             }
         }
 

@@ -7,14 +7,14 @@ using MvcDemo.Web.Services;
 
 namespace MvcDemo.Web.Controllers
 {
-    public class SubscriptionController : BaseController
+    public class SubscriptionController : Controller
     {
         private readonly NewsletterSubscriptionService mService;
 
 
-        public SubscriptionController()
+        public SubscriptionController(NewsletterSubscriptionService subscriptionService)
         {
-            mService = new NewsletterSubscriptionService();
+            mService = subscriptionService;
         }
 
 
@@ -43,6 +43,7 @@ namespace MvcDemo.Web.Controllers
 
 
         // GET: Subscription/Unsubscribe
+        [ValidateInput(false)]
         public ActionResult Unsubscribe(UnsubscriptionModel model)
         {
             if (ModelState.IsValid)

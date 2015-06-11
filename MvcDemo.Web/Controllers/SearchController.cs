@@ -1,26 +1,23 @@
-﻿using System.Globalization;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
-using MvcDemo.Web.Models.Search;
+using MvcDemo.Web.Services;
 
 namespace MvcDemo.Web.Controllers
 {
-    public class SearchController : BaseController
+    public class SearchController : Controller
     {
         private readonly SearchService mService;
         private const int PAGE_SIZE = 5;
-        private const string INDEX_NAME = "TestMvcDemo.Index";
-        private const string SITE_NAME = "TestMvcDemo";
 
 
-        public SearchController()
+        public SearchController(SearchService searchService)
         {
-            mService = new SearchService(INDEX_NAME, CultureInfo.CurrentCulture.Name, SITE_NAME);    
+            mService = searchService;
         }
 
 
-        [ValidateInput(false)]
         // GET: Search
+        [ValidateInput(false)]
         public ActionResult Index(string searchText, int? page)
         {
             var model = mService.Search(searchText, page, PAGE_SIZE);

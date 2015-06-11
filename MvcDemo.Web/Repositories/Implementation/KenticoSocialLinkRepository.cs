@@ -1,0 +1,40 @@
+﻿using System.Collections.Generic;
+
+using CMS.DocumentEngine.Types;
+
+namespace MvcDemo.Web.Repositories.Implementation
+{
+    /// <summary>
+    /// Represents a collection of links to social networks.
+    /// </summary>
+    public class KenticoSocialLinkRepository : SocialLinkRepository
+    {
+        private readonly string mSiteName;
+        private readonly string mCultureName;
+
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KenticoSocialLinkRepository"/> class that returns links from the specified site in the specified language.
+        /// </summary>
+        /// <param name="siteName">The code name of a site.</param>
+        /// <param name="cultureName">The name of a culture.</param>
+        public KenticoSocialLinkRepository(string siteName, string cultureName)
+        {
+            mSiteName = siteName;
+            mCultureName = cultureName;
+        }
+
+
+        /// <summary>
+        /// Returns an enumerable collection of links to social networks ordered by a position in the content tree.
+        /// </summary>
+        /// <returns>An enumerable collection of links to social networks ordered by a position in the content tree.</returns>
+        public override IEnumerable<SocialLink> GetSocialLinks()
+        {
+            return SocialLinkProvider.GetSocialLinks()
+                .OnSite(mSiteName)
+                .Culture(mCultureName)
+                .OrderByAscending("NodeOrder");
+        }
+    }
+}

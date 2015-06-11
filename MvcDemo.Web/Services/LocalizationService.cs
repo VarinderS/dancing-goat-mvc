@@ -1,18 +1,18 @@
 ﻿using CMS.Helpers;
 
-namespace MvcDemo.Web.Helpers
+namespace MvcDemo.Web.Services
 {
     /// <summary>
-    /// Helper class providing localization.
+    /// Localization Service.
     /// </summary>
-    public static class Resource
+    public class LocalizationService
     {
         /// <summary>
         /// Returns localization for given key.
         /// </summary>
         /// <param name="key">Resource string key.</param>
         /// <returns>Resource string for given key. Returns key if translation not found.</returns>
-        public static string GetString(string key)
+        public virtual string GetString(string key)
         {
             return ResHelper.GetString(key);
         }
@@ -24,11 +24,22 @@ namespace MvcDemo.Web.Helpers
         /// <param name="key">A key of resource string used as format string.</param>
         /// <param name="arguments">An object array that contains zero or more objects to format.</param>
         /// <returns>A resource string in which the format items have been replaced by the string representation of the corresponding objects in arguments.</returns>
-        public static string FormatString(string key, params object[] arguments)
+        public virtual string FormatString(string key, params object[] arguments)
         {
             var format = GetString(key);
 
             return string.Format(format, arguments);
+        }
+
+
+        /// <summary>
+        /// Replaces "{$stringname$}" expressions in given text with localized strings using current culture.
+        /// </summary>
+        /// <param name="text">Text to be localized.</param>
+        /// <returns>Text with localization macros replaced using respective resource strings.</returns>
+        public virtual string LocalizeString(string text)
+        {
+            return ResHelper.LocalizeString(text);
         }
     }
 }

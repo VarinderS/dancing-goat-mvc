@@ -6,11 +6,14 @@
     ViewBag.Title = "Search results for: " + Model.Query;
 }
 
-<h2>@string.Format(Resource.GetString("TestMvcDemo.Search.ResultsFor"), Model.Query)</h2>
+<h2>@string.Format(Resources.GetString("TestMvcDemo.Search.ResultsFor"), Model.Query)</h2>
 
 @if (Model.Items == null)
 {
-    @:@string.Format(Resource.GetString("TestMvcDemo.Search.NoResults"), Model.Query)
+    if (!String.IsNullOrWhiteSpace(Model.Query))
+    {
+        @:@string.Format(Resources.GetString("TestMvcDemo.Search.NoResults"), Model.Query)
+    }
 }
 
 else
@@ -19,9 +22,9 @@ else
     {
         <div class="row search-tile">
             <div class="col-md-4 col-lg-3">
-                @if (item.ImageGuid != Guid.Empty)
+                @if (item.ImageAttachment != null)
                 {
-                    <a href="@GetUrl(item.PageTypeCodeName, item.DocumentId)" title="@item.Title"><img class="img-responsive" src="@Url.Attachment(item.ImageGuid, null)" alt="@item.Title" /></a>
+                    <a href="@GetUrl(item.PageTypeCodeName, item.DocumentId)" title="@item.Title"><img class="img-responsive" src="@Url.Kentico().Attachment(item.ImageAttachment)" alt="@item.Title" /></a>
                 }
             </div>
             <div class="col-md-8 col-lg-9 search-tile-content">

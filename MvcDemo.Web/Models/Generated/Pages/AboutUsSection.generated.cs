@@ -10,6 +10,7 @@
 //--------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 
 using CMS;
 using CMS.Helpers;
@@ -75,16 +76,11 @@ namespace CMS.DocumentEngine.Types
         /// <summary>
         /// Image.
         /// </summary>
-        [DatabaseField]
-        public Guid AboutUsSectionImage
+        public Attachment AboutUsSectionImage
         {
             get
             {
-                return ValidationHelper.GetGuid(GetValue("AboutUsSectionImage"), Guid.Empty);
-            }
-            set
-            {
-                SetValue("AboutUsSectionImage", value);
+                return GetFieldAttachment("AboutUsSectionImage");
             }
         }
 

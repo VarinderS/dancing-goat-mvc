@@ -10,6 +10,7 @@
 //--------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 
 using CMS;
 using CMS.Helpers;
@@ -73,7 +74,7 @@ namespace CMS.DocumentEngine.Types
 
 
         /// <summary>
-        /// If true, cafe is company cafe. Otherwise, it is partner cafe.
+        /// Our cafe.
         /// </summary>
         [DatabaseField]
         public bool CafeIsCompanyCafe
@@ -177,16 +178,11 @@ namespace CMS.DocumentEngine.Types
         /// <summary>
         /// Photo.
         /// </summary>
-        [DatabaseField]
-        public Guid CafePhoto
+        public Attachment CafePhoto
         {
             get
             {
-                return ValidationHelper.GetGuid(GetValue("CafePhoto"), Guid.Empty);
-            }
-            set
-            {
-                SetValue("CafePhoto", value);
+                return GetFieldAttachment("CafePhoto");
             }
         }
 

@@ -9,7 +9,7 @@ namespace MvcDemo.Web.Models.Contacts
     {
         [Display(Name = "general.firstname")]
         [DataType(DataType.Text)]
-        [MaxLength(200)]
+        [MaxLength(200, ErrorMessage = "general.maxlengthexceeded")]
         public string FirstName
         {
             get;
@@ -19,7 +19,7 @@ namespace MvcDemo.Web.Models.Contacts
 
         [Display(Name = "general.lastname")]
         [DataType(DataType.Text)]
-        [MaxLength(200)]
+        [MaxLength(200, ErrorMessage = "general.maxlengthexceeded")]
         public string LastName
         {
             get;
@@ -29,7 +29,7 @@ namespace MvcDemo.Web.Models.Contacts
 
         [Required(ErrorMessage = "general.requireemail")]
         [Display(Name = "general.emailaddress")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "general.correctemailformat")]
         [MaxLength(100, ErrorMessage = "TestMvcDemo.News.LongEmail")]
         public string Email
         {
@@ -41,7 +41,7 @@ namespace MvcDemo.Web.Models.Contacts
         [Required(ErrorMessage = "general.requiresmessage")]
         [Display(Name = "general.message")]
         [DataType(DataType.MultilineText)]
-        [MaxLength(500)]
+        [MaxLength(500, ErrorMessage = "general.maxlengthexceeded")]
         public string MessageText
         {
             get;

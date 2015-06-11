@@ -10,6 +10,7 @@
 //--------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 
 using CMS;
 using CMS.Helpers;
@@ -109,16 +110,11 @@ namespace CMS.DocumentEngine.Types
         /// <summary>
         /// Icon.
         /// </summary>
-        [DatabaseField]
-        public Guid SocialLinkIcon
+        public Attachment SocialLinkIcon
         {
             get
             {
-                return ValidationHelper.GetGuid(GetValue("SocialLinkIcon"), Guid.Empty);
-            }
-            set
-            {
-                SetValue("SocialLinkIcon", value);
+                return GetFieldAttachment("SocialLinkIcon");
             }
         }
 

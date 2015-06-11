@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using MvcDemo.Web.Services
+@{
+    Resources = DependencyResolver.Current.GetService<LocalizationService>();
+}
+<!DOCTYPE html>
 
 <html>
 <head id="head">
@@ -15,19 +19,19 @@
                     <nav role="navigation">
                         <ul>
                             <li>
-                                @Html.ActionLink(Resource.GetString("TestMvcDemo.Home"), "Index", "Home")
+                                @Html.ActionLink(Resources.GetString("TestMvcDemo.Home"), "Index", "Home")
                             </li>
                             <li>
-                                @Html.ActionLink(Resource.GetString("TestMvcDemo.Articles"), "Index", "Articles")
+                                @Html.ActionLink(Resources.GetString("TestMvcDemo.Articles"), "Index", "Articles")
                             </li>
                             <li>
-                                @Html.ActionLink(Resource.GetString("TestMvcDemo.AboutUs"), "Index", "About")
+                                @Html.ActionLink(Resources.GetString("TestMvcDemo.AboutUs"), "Index", "About")
                             </li>
                             <li>
-                                @Html.ActionLink(Resource.GetString("TestMvcDemo.Cafes"), "Index", "Cafes")
+                                @Html.ActionLink(Resources.GetString("TestMvcDemo.Cafes"), "Index", "Cafes")
                             </li>
                             <li>
-                                @Html.ActionLink(Resource.GetString("TestMvcDemo.Contact"), "Index", "Contacts")
+                                @Html.ActionLink(Resources.GetString("TestMvcDemo.Contact"), "Index", "Contacts")
                             </li>
                         </ul>
                     </nav>
@@ -55,7 +59,7 @@
                     <div class="col-xs-12 col-md-7 col-lg-8">
                         @using (Html.BeginForm("Index", "Search", FormMethod.Get, new { @Id = "searchForm", @Class = "searchBox" }))
                         {
-                            <input type="text" id="searchtext" name="searchtext" placeholder="@Resource.GetString("general.search")" maxlength="1000" class="search-box-watermark" autocomplete="off">
+                            <input type="text" id="searchtext" name="searchtext" placeholder="@Resources.GetString("general.search")" maxlength="1000" class="search-box-watermark" autocomplete="off">
                             <input type="submit" value="" class="search-box-btn">
                         }
                     </div>
@@ -72,17 +76,17 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4 col-lg-4 footer-col">
-                            <h3 class="contact-title">@Resource.GetString("TestMvcDemo.Contact.Title")</h3>
+                            <h3 class="contact-title">@Resources.GetString("TestMvcDemo.Contact.Title")</h3>
                             <p>
                                 @Html.Action("CompanyAddress", "Contacts")
                             </p>
                         </div>
                         <div class="col-md-4 col-lg-4 footer-col">
-                            <h3>@Resource.GetString("TestMvcDemo.FollowUs.Title")</h3>
+                            <h3>@Resources.GetString("TestMvcDemo.FollowUs.Title")</h3>
                             @Html.Action("CompanySocialLinks", "Contacts")
                         </div>
                         <div class="col-md-4 col-lg-4 footer-col">
-                            <h3>@Resource.GetString("TestMvcDemo.News.Title")</h3>
+                            <h3>@Resources.GetString("TestMvcDemo.News.Title")</h3>
                             @Html.Action("Show", "Subscription")
                         </div>
                     </div>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Kentico.Web.Mvc5</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/Kentico/dancing-goat-mvc/blob/master/License.txt</licenseUrl>
+    <projectUrl>https://github.com/Kentico/dancing-goat-mvc</projectUrl>
+    <iconUrl>http://devnet.kentico.com/DevNet/media/ArticleTeasers/160x160-product.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>Copyright 2015 Kentico</copyright>
+    <tags>Kentico AspNet AspNetMvc</tags>
+  </metadata>
+</package>

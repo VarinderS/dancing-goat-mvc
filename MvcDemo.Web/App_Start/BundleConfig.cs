@@ -6,19 +6,34 @@ namespace MvcDemo.Web
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            // Enable CDN
             bundles.UseCdn = true;
 
-            var jqueryCDN = "//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.3.min.js";
-            var jquery = new ScriptBundle("~/bundles/jquery", jqueryCDN).Include(
-                        "~/Scripts/jquery-{version}.js");
-            
-            jquery.CdnFallbackExpression = "window.jQuery";
-            bundles.Add(jquery);
+            RegisterJqueryBundle(bundles);
+            RegisterJqueryValidationBundle(bundles);
+        }
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval")
+
+        private static void RegisterJqueryBundle(BundleCollection bundles)
+        {
+            var bundle = new ScriptBundle("~/bundles/jquery")
+            {
+                CdnPath = "//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js",
+                CdnFallbackExpression = "window.jQuery"
+            };
+
+            bundle.Include("~/Scripts/jquery-{version}.js");
+
+            bundles.Add(bundle);
+        }
+
+        
+        private static void RegisterJqueryValidationBundle(BundleCollection bundles)
+        {
+            var bundle = new ScriptBundle("~/bundles/jqueryval")
                 .Include("~/Scripts/jquery.validate*")
-                .Include("~/Scripts/jquery.unobtrusive-ajax.min.js"));
+                .Include("~/Scripts/jquery.unobtrusive-ajax.min.js");
+
+            bundles.Add(bundle);
         }
     }
 }

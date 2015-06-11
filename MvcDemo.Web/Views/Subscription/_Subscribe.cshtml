@@ -2,7 +2,7 @@
 
 @if (Model.SubscriptionSaved)
 {
-    @Resource.GetString("TestMvcDemo.News.Subscribed");
+    @Resources.GetString("TestMvcDemo.News.Subscribed");
 }
 else
 {
@@ -17,6 +17,6 @@ else
     
         @Html.ValidatedEditorFor(m => m.Email)
     
-        <input type="submit" value="@Resource.GetString("TestMvcDemo.News.Subscribe")" class="btn btn-primary" />
+        <input type="submit" value="@Resources.GetString("TestMvcDemo.News.Subscribe")" class="btn btn-primary" />
     }
 }

@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
+using System.Linq;
 
+using CMS.DocumentEngine;
 using CMS.Helpers;
 using CMS.Membership;
 using CMS.Search;
 using CMS.SiteProvider;
 
-namespace MvcDemo.Web.Models.Search
+using MvcDemo.Web.Models.Search;
+
+using SearchResults = MvcDemo.Web.Models.Search.SearchResults;
+
+namespace MvcDemo.Web.Services
 {
     public class SearchService
     {
@@ -18,6 +23,7 @@ namespace MvcDemo.Web.Models.Search
         private readonly string mCultureName;
         private readonly string mSearchIndexName;
         private readonly string mDefaultCulture;
+        private readonly string mSiteName;
 
         #endregion
 
@@ -35,6 +41,7 @@ namespace MvcDemo.Web.Models.Search
             mCultureName = cultureName;
             mSearchIndexName = searchIndexName;
             mDefaultCulture = SiteInfoProvider.GetSiteInfo(siteName).DefaultVisitorCulture;
+            mSiteName = siteName;
         }
 
 
@@ -54,6 +61,12 @@ namespace MvcDemo.Web.Models.Search
                 PageSize = pageSize,
                 Query = query
             };
+
+            if (String.IsNullOrWhiteSpace(query))
+            {
+                searchResults.TotalItemCount = 0;
+                return searchResults;
+            }
 
             int numberOfResults;
             SearchInternal(query, page, pageSize, out numberOfResults);
@@ -78,13 +91,15 @@ namespace MvcDemo.Web.Models.Search
         /// <param name="numberOfResults">Total number of search results</param>
         private void SearchInternal(string query, int pageIndex, int pageSize, out int numberOfResults)
         {
-            var docCondition = new DocumentSearchCondition(string.Empty, mCultureName, mDefaultCulture, false);
-            var condition = new SearchCondition(documentCondition: docCondition, fuzzySearch: true);
-            var searchText = SearchSyntaxHelper.CombineSearchCondition(query, condition);
+            var documentCondition = new DocumentSearchCondition(null, mCultureName, mDefaultCulture, combineWithDefaultCulture: false);
+            var condition = new SearchCondition(documentCondition: documentCondition);
+            var searchExpression = SearchSyntaxHelper.CombineSearchCondition(query, condition);
 
             var parameters = new SearchParameters
             {
-                SearchFor = searchText,
+                SearchFor = searchExpression,
+                Path = "/%",
+                ClassNames = null,
                 CurrentCulture = mCultureName,
                 DefaultCulture = mDefaultCulture,
                 CombineWithDefaultCulture = false,
@@ -117,12 +132,14 @@ namespace MvcDemo.Web.Models.Search
                 return null;
             }
 
+            var attachmentIdentifiers = new List<Guid>();
             foreach (DataRow row in mRawResults.Tables[0].Rows)
             {
                 string date, pageTypeDisplayName, pageTypeCodeName;
                 int documentId;
                 var documentNodeId = GetDocumentNodeId(row["type"], row["id"]);
                 var guid = ((row["image"] as string) == null) ? Guid.Empty : new Guid(row["image"].ToString());
+                attachmentIdentifiers.Add(guid);
 
                 GetAdditionalData(row["type"], documentNodeId, out date, out documentId, out pageTypeDisplayName, out pageTypeCodeName);
 
@@ -130,7 +147,6 @@ namespace MvcDemo.Web.Models.Search
                 {
                     DocumentId = documentId,
                     Title = row["title"].ToString(),
-                    ImageGuid = guid,
                     Content = row["content"].ToString(),
                     Date = date,
                     PageTypeDispayName = pageTypeDisplayName,
@@ -138,6 +154,16 @@ namespace MvcDemo.Web.Models.Search
                 };
 
                 searchItems.Add(searchItem);
+            }
+
+            var attachments = AttachmentInfoProvider.GetAttachments().OnSite(mSiteName).BinaryData(false).WhereIn("AttachmentGUID", attachmentIdentifiers).ToDictionary(x => x.AttachmentGUID);
+            for (int i = 0; i < searchItems.Count; i++)
+            {
+                AttachmentInfo attachment = null;
+                if (attachments.TryGetValue(attachmentIdentifiers[i], out attachment))
+                {
+                    searchItems[i].ImageAttachment = new Attachment(attachment);
+                }
             }
 
             return searchItems;

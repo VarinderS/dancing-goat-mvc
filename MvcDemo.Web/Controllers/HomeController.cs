@@ -1,44 +1,42 @@
 ﻿using System.Web.Mvc;
-using System.Globalization;
-
-using CMS.DocumentEngine.Types;
 
 using MvcDemo.Web.Models.Home;
+using MvcDemo.Web.Repositories;
 
 namespace MvcDemo.Web.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
+        private readonly ArticleRepository mArticleRepository;
+        private readonly AboutUsRepository mAboutUsRepository;
+        private readonly CafeRepository mCafeRepository;
+
+
+        public HomeController(ArticleRepository repository, AboutUsRepository aboutUsRepository, CafeRepository cafeRepository)
+        {
+            mArticleRepository = repository;
+            mAboutUsRepository = aboutUsRepository;
+            mCafeRepository = cafeRepository;
+        }
+
+
         // GET: Home
         public ActionResult Index()
         {
             var viewModel = new IndexViewModel
             {
-                LatestArticles = ArticleProvider.GetArticles()
-                                                .OnSite("TestMvcDemo")
-                                                .Culture(CultureInfo.CurrentUICulture.Name)
-                                                .OrderByDescending("DocumentPublishFrom")
-                                                .TopN(5)
+                LatestArticles = mArticleRepository.GetLatestArticles(5)
             };
 
-            var ourStory = AboutUsProvider.GetAboutUs()
-                                          .OnSite("TestMvcDemo")
-                                          .Culture(CultureInfo.CurrentUICulture.Name)
-                                          .FirstObject;
+            var ourStory = mAboutUsRepository.GetOurStory();
 
             if (ourStory != null)
             {
                 viewModel.OurStory = ourStory.AboutUsTeaser;
             }
 
-            viewModel.CompanyCafes = CafeProvider.GetCafes()
-                                                 .OnSite("TestMvcDemo")
-                                                 .Culture(CultureInfo.CurrentUICulture.Name)
-                                                 .Columns("CafeName", "CafePhoto")
-                                                 .OrderBy("NodeLevel", "NodeOrder", "NodeName")
-                                                 .WhereTrue("CafeIsCompanyCafe")
-                                                 .TopN(4);
-            
+            viewModel.CompanyCafes = mCafeRepository.GetCompanyCafes(4);
+
             return View(viewModel);
         }
     }

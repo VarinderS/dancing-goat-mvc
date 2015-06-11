@@ -3,15 +3,35 @@ using System.Linq;
 using System.Web.Mvc;
 
 using CMS.DocumentEngine.Types;
-using CMS.OnlineForms.Types;
 
 using MvcDemo.Web.Models.Contacts;
+using MvcDemo.Web.Repositories;
+using MvcDemo.Web.Services;
 
 namespace MvcDemo.Web.Controllers
 {
-    public class ContactsController : BaseController
+    public class ContactsController : Controller
     {
-        #region "Actions"
+        private readonly CafeRepository mCafeRepository;
+        private readonly ContactRepository mContactRepository;
+        private readonly CountryRepository mCountryRepository;
+        private readonly FormItemRepository mFormItemRepository;
+        private readonly LocalizationService mLocalizationService;
+        private readonly SocialLinkRepository mSocialLinkRepository;
+
+
+        public ContactsController(CafeRepository cafeRepository, SocialLinkRepository socialLinkRepository,
+            ContactRepository contactRepository, FormItemRepository formItemRepository,
+            CountryRepository countryRepository, LocalizationService localizationService)
+        {
+            mLocalizationService = localizationService;
+            mCountryRepository = countryRepository;
+            mFormItemRepository = formItemRepository;
+            mCafeRepository = cafeRepository;
+            mSocialLinkRepository = socialLinkRepository;
+            mContactRepository = contactRepository;
+        }
+
 
         // GET: Contacts
         public ActionResult Index()
@@ -49,16 +69,7 @@ namespace MvcDemo.Web.Controllers
 
             try
             {
-                // Store the message in the Forms application
-                var formItem = new TestMvcDemoContactUsItem
-                {
-                    UserFirstName = message.FirstName,
-                    UserLastName = message.LastName,
-                    UserEmail = message.Email,
-                    UserMessage = message.MessageText,
-                };
-
-                formItem.Insert();
+                mFormItemRepository.CreateContactUsFormItem(message);
             }
             catch
             {
@@ -70,6 +81,7 @@ namespace MvcDemo.Web.Controllers
 
 
         [ChildActionOnly]
+        [ValidateInput(false)]
         public ActionResult CompanyAddress()
         {
             var address = GetCompanyContactModel();
@@ -79,27 +91,16 @@ namespace MvcDemo.Web.Controllers
 
 
         [ChildActionOnly]
+        [ValidateInput(false)]
         public ActionResult CompanySocialLinks()
         {
-            var socialLinks = SocialLinkProvider.GetSocialLinks()
-                                                .OnSite("TestMvcDemo")
-                                                .OrderByAscending("NodeOrder");
-
-            return PartialView("_SocialLinks", socialLinks);
+            return PartialView("_SocialLinks", mSocialLinkRepository.GetSocialLinks());
         }
 
-        #endregion
-
-
-        #region "Model methods"
 
         private IndexViewModel GetIndexViewModel()
         {
-            var cafes = CafeProvider.GetCafes()
-                                       .OnSite("TestMvcDemo")
-                                       .Columns("CafeCity", "CafeStreet", "CafeName", "CafeZipCode", "CafeCountry", "CafePhone")
-                                       .WhereTrue("CafeIsCompanyCafe")
-                                       .TopN(4);
+            var cafes = mCafeRepository.GetCompanyCafes(4);
 
             return new IndexViewModel
             {
@@ -111,15 +112,35 @@ namespace MvcDemo.Web.Controllers
 
         private ContactModel GetCompanyContactModel()
         {
-            return new ContactModel(ContactProvider.GetContacts().OnSite("TestMvcDemo").FirstObject);
+            return CreateContactModel(mContactRepository.GetCompanyContact());
         }
 
 
         private List<ContactModel> GetCompanyCafesModel(IEnumerable<Cafe> cafes)
         {
-            return cafes.Select(cafe => new ContactModel(cafe)).ToList();
+            return cafes.Select(CreateContactModel).ToList();
         }
 
-        #endregion
+
+        private ContactModel CreateContactModel(IContact contact)
+        {
+            var countryStateName = CountryStateName.Parse(contact.Country);
+            var country = mCountryRepository.GetCountry(countryStateName.CountryName);
+            var state = mCountryRepository.GetState(countryStateName.StateName);
+
+            var model = new ContactModel(contact)
+            {
+                CountryCode = country.CountryTwoLetterCode,
+                Country = mLocalizationService.LocalizeString(country.CountryDisplayName)
+            };
+
+            if (state != null)
+            {
+                model.StateCode = state.StateName;
+                model.State = mLocalizationService.LocalizeString(state.StateDisplayName);
+            }
+
+            return model;
+        }
     }
 }

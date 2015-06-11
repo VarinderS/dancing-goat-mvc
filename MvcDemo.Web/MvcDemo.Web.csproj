@@ -25,7 +25,6 @@
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,18 +44,412 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Antlr3.Runtime">
-      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="CMS.WebAnalytics, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9, processorArchitecture=MSIL">
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Bin\CMS.WebAnalytics.dll</HintPath>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.Mvc5.3.3.4\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="CMS.AmazonStorage, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.AmazonStorage.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CMS.Automation, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Automation.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.AzureStorage, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.AzureStorage.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.BannerManagement, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.BannerManagement.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Blogs, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Blogs.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Chat, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Chat.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.CKEditor, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.CKEditor.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Controls, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Controls.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.ContinuousIntegration, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.ContinuousIntegration.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.DocumentWebServices, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.DocumentWebServices.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.FormControls, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.FormControls.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Core, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Core.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.CustomTables, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.CustomTables.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.DataCom, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.DataCom.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="FiftyOne.Foundation, Version=3.1.2.3, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\FiftyOne.Foundation.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Forums, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Forums.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.MembershipProvider, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.MembershipProvider.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.OutputFilter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.OutputFilter.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.PortalControls, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.PortalControls.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.CMSSiteMapProvider, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.CMSSiteMapProvider.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.FileSystemStorage, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.FileSystemStorage.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.HealthMonitoring, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.HealthMonitoring.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Lucene.Net.WordNet.SynExpand, Version=2.0.0.1, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\Lucene.Net.WordNet.SynExpand.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Lucene.Net.v3, Version=3.0.3.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\Lucene.Net.v3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.ModuleUsageTracking, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.ModuleUsageTracking.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.OnlineForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.OnlineForms.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PDFClown, Version=0.1.2.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\PDFClown.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Personas, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Personas.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Search.Lucene3, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Search.Lucene3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Search.TextExtractors, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Search.TextExtractors.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.SocialMarketing, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.SocialMarketing.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.StrandsRecommender, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.StrandsRecommender.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Synchronization.WSE3, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Synchronization.WSE3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Synchronization, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Synchronization.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Community, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Community.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.DataEngine, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.DataEngine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.DataProviderSQL, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.DataProviderSQL.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.DocumentEngine, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.DocumentEngine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.EcommerceProvider, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.EcommerceProvider.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Ecommerce, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Ecommerce.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.EmailEngine, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.EmailEngine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.EventLog, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.EventLog.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.EventManager, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.EventManager.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.ExtendedControls, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.ExtendedControls.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.FormEngine, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.FormEngine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Helpers, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Helpers.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Globalization, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Globalization.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.ImportExport, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.ImportExport.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.IO, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.IO.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.LicenseProvider, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.LicenseProvider.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.MacroEngine, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.MacroEngine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.MediaLibrary, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.MediaLibrary.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Membership, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Membership.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.MessageBoards, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.MessageBoards.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Messaging, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Messaging.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Modules, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Modules.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Newsletters, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Newsletters.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Notifications, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Notifications.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.OnlineMarketing, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.OnlineMarketing.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Polls, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Polls.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.PortalEngine, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.PortalEngine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Protection, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Protection.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="ThoughtWorks.QRCode, Version=9.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\CMSSolution\CMS\bin\ThoughtWorks.QRCode.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Relationships, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Relationships.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Reporting, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Reporting.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Localization, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Localization.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.SalesForce, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.SalesForce.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.SharePoint, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.SharePoint.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Search, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Search.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Taxonomy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Taxonomy.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Tests, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Tests.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.TranslationServices, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.TranslationServices.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.VirtualPathProvider, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.VirtualPathProvider.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.WebApi, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.WebApi.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.WebServices, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.WebServices.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Scheduler, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Scheduler.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.SearchProviderSQL, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.SearchProviderSQL.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.Base, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.Base.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.SiteProvider, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.SiteProvider.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.SocialMedia, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.SocialMedia.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.SynchronizationEngine, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.SynchronizationEngine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.UIControls, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.UIControls.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.URLRewritingEngine, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.URLRewritingEngine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.WebAnalytics, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.WebAnalytics.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.WebDAV, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.WebDAV.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.WebFarmSync, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.WebFarmSync.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.WIFIntegration, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.WIFIntegration.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.WinServiceEngine, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.WinServiceEngine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CMS.WorkflowEngine, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
+      <HintPath>..\..\CMSSolution\CMS\bin\CMS.WorkflowEngine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -66,9 +459,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Optimization">
-      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -76,34 +466,13 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="WebGrease">
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Web.Razor">
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Webpages">
-      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.2\lib\net45\System.Web.Webpages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Webpages.Deployment">
-      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.2\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Webpages.Razor">
-      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.2\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Helpers">
-      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.Infrastructure">
-      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="App_Data\mimetypes.txt" />
     <Content Include="Content\Images\404.jpg" />
     <Content Include="Content\Images\empty_cup.jpg" />
     <Content Include="Content\Images\icon-magnifier.png" />
@@ -112,12 +481,13 @@
     <Content Include="Global.asax" />
     <Content Include="Gruntfile.js" />
     <Content Include="Content\Styles\Menu.less" />
-    <None Include="Scripts\jquery-2.1.3.intellisense.js" />
-    <Content Include="Scripts\jquery-2.1.3.js" />
-    <Content Include="Scripts\jquery-2.1.3.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.map" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -127,17 +497,17 @@
     <Content Include="Views\Articles\Show.cshtml" />
     <Content Include="Views\Contacts\Index.cshtml" />
     <Content Include="Views\Contacts\_SendMessage.cshtml" />
-    <Content Include="Scripts\jquery-2.1.3.min.map" />
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Contacts\Error.cshtml" />
     <Content Include="Views\Contacts\_Address.cshtml" />
     <Content Include="Views\Contacts\_SocialLinks.cshtml" />
     <Content Include="Views\Cafes\Index.cshtml" />
-    <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Subscription\_Subscribe.cshtml" />
     <Content Include="Views\Subscription\Unsubscribe.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Pager\_Pager.cshtml" />
+    <Content Include="packages.config" />
+    <Content Include="Views\Shared\NotFound.cshtml" />
     <None Include="Views\_ViewStart.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -145,28 +515,47 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\LocalizationConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\SmartSearchMappingConfig.cs" />
+    <Compile Include="App_Start\StorageMappingConfig.cs" />
     <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Controllers\HttpErrorsController.cs" />
+    <Compile Include="Infrastructure\ActionInvokerWrapper.cs" />
+    <Compile Include="Infrastructure\ControllerFactoryWrapper.cs" />
+    <Compile Include="Infrastructure\Validation\LocalizedDataTypeAttributeAdapter.cs" />
+    <Compile Include="Infrastructure\Validation\LocalizationHelper.cs" />
+    <Compile Include="Infrastructure\HandleNotFoundErrorAttribute.cs" />
+    <Compile Include="Infrastructure\Validation\LocalizedMinLengthAttributeAdapter.cs" />
+    <Compile Include="Infrastructure\Validation\LocalizedRegularExpressionAttributeAdapter.cs" />
+    <Compile Include="Infrastructure\Validation\LocalizedRangeAttributeAdapter.cs" />
+    <Compile Include="Infrastructure\Validation\LocalizedStringLengthAttributeAdapter.cs" />
+    <Compile Include="Repositories\AboutUsRepository.cs" />
+    <Compile Include="Repositories\ArticleRepository.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CafesController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
-    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PagerController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
-    <Compile Include="Infrastructure\ControllerFactory.cs" />
     <Compile Include="Controllers\SubscriptionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Extensions\HtmlHelperExtensions.cs" />
-    <Compile Include="Helpers\Resource.cs" />
-    <Compile Include="Helpers\Extensions\UrlHelperExtensions.cs" />
-    <Compile Include="Infrastructure\LocalizedMaxLengthAttributeAdapter.cs" />
-    <Compile Include="Infrastructure\LocalizedRequiredAttributeAdapter.cs" />
+    <Compile Include="Repositories\CountryRepository.cs" />
+    <Compile Include="Repositories\FormItemRepository.cs" />
+    <Compile Include="Repositories\Implementation\KenticoAboutUsRepository.cs" />
+    <Compile Include="Repositories\Implementation\KenticoArticleRepository.cs" />
+    <Compile Include="Repositories\Implementation\KenticoCafeRepository.cs" />
+    <Compile Include="Repositories\Implementation\KenticoContactRepository.cs" />
+    <Compile Include="Repositories\Implementation\KenticoCountryRepository.cs" />
+    <Compile Include="Repositories\Implementation\KenticoFormItemRepository.cs" />
+    <Compile Include="Repositories\Implementation\KenticoSocialLinkRepository.cs" />
+    <Compile Include="Repositories\ValueTypes\CountryStateName.cs" />
+    <Compile Include="Services\LocalizationService.cs" />
+    <Compile Include="Infrastructure\Validation\LocalizedMaxLengthAttributeAdapter.cs" />
+    <Compile Include="Infrastructure\Validation\LocalizedRequiredAttributeAdapter.cs" />
     <Compile Include="Infrastructure\SiteCultureConstraint.cs" />
     <Compile Include="Infrastructure\LocalizedModelMetadataProvider.cs" />
     <Compile Include="Infrastructure\MultiCultureMvcRouteHandler.cs" />
@@ -197,18 +586,22 @@
     <Compile Include="Models\Search\SearchResultItem.cs" />
     <Compile Include="Models\Search\SearchResults.cs" />
     <Compile Include="Models\Pager\IPagedDataSource.cs" />
+    <Compile Include="Repositories\CafeRepository.cs" />
+    <Compile Include="Repositories\ContactRepository.cs" />
+    <Compile Include="Repositories\SocialLinkRepository.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Models\Subscription\SubscribeModel.cs" />
     <Compile Include="Models\Subscription\UnsubscriptionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\NewsletterSubscriptionService.cs" />
+    <Compile Include="Infrastructure\CustomViewPage.cs" />
+    <Compile Include="Infrastructure\CustomViewPage.generic.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="packages.config">
+    <Content Include="Views\web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Content\Styles\Site.less" />
     <Content Include="package.json" />
     <Content Include="Content\Styles\Grid.less" />
@@ -226,76 +619,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\CMSSolution\Base\Base.csproj">
-      <Project>{25431232-c0b1-4aef-890f-b92da6df2bed}</Project>
-      <Name>Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\Core\Core.csproj">
-      <Project>{71755c13-7b45-48ea-8425-cbad44133a02}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\DataEngine\DataEngine.csproj">
-      <Project>{a7a2ecd2-8c5c-4c95-9efe-82d605fdb28c}</Project>
-      <Name>DataEngine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\DataProviderSQL\DataProviderSQL.csproj">
-      <Project>{0b9bed62-eb15-47c2-9d40-d961910128bd}</Project>
-      <Name>DataProviderSQL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\DocumentEngine\DocumentEngine.csproj">
-      <Project>{ca36a1e6-9385-46aa-a10e-97699e293363}</Project>
-      <Name>DocumentEngine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\FileSystemStorage\FileSystemStorage.csproj">
-      <Project>{36e8f750-2713-4d63-8d08-60b376fb15bf}</Project>
-      <Name>FileSystemStorage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\Globalization\Globalization.csproj">
-      <Project>{d9b92f71-4497-4050-a75d-0f9c84dfbe6b}</Project>
-      <Name>Globalization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\Helpers\Helpers.csproj">
-      <Project>{ae25cc54-d7ab-4efe-8a85-6be0b336be59}</Project>
-      <Name>Helpers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\IO\IO.csproj">
-      <Project>{DBCB4EA1-3129-4D2E-A653-DC948A34E0C2}</Project>
-      <Name>IO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\Localization\Localization.csproj">
-      <Project>{8003C67F-4B92-47BC-9117-CEA7429F929E}</Project>
-      <Name>Localization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\Membership\Membership.csproj">
-      <Project>{D8BC8F2E-B5CB-472B-A894-3900A96FF456}</Project>
-      <Name>Membership</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\Newsletters\Newsletters.csproj">
-      <Project>{51729DE3-8BFF-4943-B5CD-CC63DDCB3E56}</Project>
-      <Name>Newsletters</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\OnlineForms\OnlineForms.csproj">
-      <Project>{6780157e-48df-4254-b455-d9cebe73250f}</Project>
-      <Name>OnlineForms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\Protection\Protection.csproj">
-      <Project>{BD8679F6-9BC7-48EA-8DCE-F244BC328BA8}</Project>
-      <Name>Protection</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\Search.Lucene3\Search.Lucene3.csproj">
-      <Project>{27CF8B76-260A-4FB9-8574-3B6BF13F110D}</Project>
-      <Name>Search.Lucene3</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\Search\Search.csproj">
-      <Project>{1F2EE2A3-4D9C-4C9B-96CC-4414656301F2}</Project>
-      <Name>Search</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CMSSolution\SiteProvider\SiteProvider.csproj">
-      <Project>{03F631A2-1728-411F-851B-58B33200B7EA}</Project>
-      <Name>SiteProvider</Name>
+    <ProjectReference Include="..\Kentico.Web.Mvc\Kentico.Web.Mvc.csproj">
+      <Project>{58edc0e7-c978-498b-855d-3461d75e0ca7}</Project>
+      <Name>Kentico.Web.Mvc</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
@@ -313,7 +639,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59878</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/MVCDemo</IISUrl>
+          <IISUrl>http://127.0.0.78/MVCDemo</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

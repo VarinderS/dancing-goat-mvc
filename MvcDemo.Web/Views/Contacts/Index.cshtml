@@ -1,11 +1,11 @@
 ﻿@model MvcDemo.Web.Models.Contacts.IndexViewModel
 
 @{
-    ViewBag.Title = Resource.GetString("TestMvcDemo.Contact");
+    ViewBag.Title = Resources.GetString("TestMvcDemo.Contact");
 }
 
 <div class="col-md-6">
-    <h2 class="contact-title">@Resource.GetString("TestMvcDemo.Roastery")</h2>
+    <h2 class="contact-title">@Resources.GetString("TestMvcDemo.Roastery")</h2>
     <ul class="contact-info">
         <li>@Model.CompanyContact.Phone</li>
         <li>@Html.MailTo(Model.CompanyContact.Email)</li>
@@ -17,10 +17,10 @@
     </ul>
 </div>
 <div class="col-md-6">
-    <h2>@Resource.GetString("TestMvcDemo.ContactUs.Title")</h2>
+    <h2>@Resources.GetString("TestMvcDemo.ContactUs.Title")</h2>
     @if (Model.MessageSent)
     {
-        <div class="info-label">@Resource.GetString("TestMvcDemo.ContactUs.Thanks")</div>
+        <div class="info-label">@Resources.GetString("TestMvcDemo.ContactUs.Thanks")</div>
     }
     else
     {
@@ -30,7 +30,7 @@
     }
 </div>
 
-<h2>@Resource.GetString("TestMvcDemo.CompanyCafes")</h2>
+<h2>@Resources.GetString("TestMvcDemo.CompanyCafes")</h2>
 <div class="row">
     @foreach (var cafe in @Model.CompanyCafes)
     {
@@ -50,7 +50,7 @@
     }
 </div>
 
-<h2 class="map-title">@Resource.GetString("TestMvcDemo.ContactUs.MapTitle")</h2>
+<h2 class="map-title">@Resources.GetString("TestMvcDemo.ContactUs.MapTitle")</h2>
 <div class="map js-map"></div>
 
 @section Scripts {

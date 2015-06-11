@@ -1,4 +1,4 @@
-﻿using System;
+﻿using CMS.DocumentEngine;
 
 using MvcDemo.Web.Models.Contacts;
 
@@ -6,7 +6,7 @@ namespace MvcDemo.Web.Models.Cafes
 {
     public class CafeModel
     {
-        public Guid Photo
+        public Attachment Photo
         {
             get; 
             set; 

@@ -1,10 +1,12 @@
 ﻿using System;
 
+using CMS.DocumentEngine;
+
 namespace MvcDemo.Web.Models.Search
 {
     public class SearchResultItem
     {
-        public Guid ImageGuid
+        public Attachment ImageAttachment
         {
             get;
             set;

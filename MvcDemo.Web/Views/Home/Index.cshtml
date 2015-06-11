@@ -1,7 +1,7 @@
 ﻿@model MvcDemo.Web.Models.Home.IndexViewModel
 
 @{
-    ViewBag.Title = Resource.GetString("TestMvcDemo.Home");
+    ViewBag.Title = Resources.GetString("TestMvcDemo.Home");
 }
 
 @helper MoreButton(string text, string actionName, string controllerName)
@@ -16,7 +16,7 @@
 }
 
 <div class="row">
-    <h1 class="title-tab">@Resource.GetString("TestMvcDemo.Articles.LatestOne")</h1>
+    <h1 class="title-tab">@Resources.GetString("TestMvcDemo.Articles.LatestOne")</h1>
     @{var first = true; }
     @foreach (var article in @Model.LatestArticles)
     {
@@ -26,7 +26,7 @@
             <div class="article-tile article-tile-large">
                 <div class="col-md-12 col-lg-6">
                     <a href="@Url.Action("Show", "Articles", new { id = article.DocumentID })">
-                        <img alt="Article @article.ArticleTitle" src="@Url.Attachment(article.ArticleTeaser, null)" class="article-tile-image">
+                        <img alt="Article @article.ArticleTitle" src="@Url.Kentico().Attachment(article.ArticleTeaser)" class="article-tile-image">
                     </a>
                 </div>
                 <div class="col-md-12 col-lg-6">
@@ -49,7 +49,7 @@
             <div class="col-md-3">
                 <div class="article-tile">
                     <a href="@Url.Action("Show", "Articles", new { id = article.DocumentID })">
-                        <img alt="Article @article.ArticleTitle" src="@Url.Attachment(article.ArticleTeaser, null)" class="article-tile-image">
+                        <img alt="Article @article.ArticleTitle" src="@Url.Kentico().Attachment(article.ArticleTeaser)" class="article-tile-image">
                     </a>
                     <div class="article-tile-date">
                         @article.PublicationDate.ToString("m")
@@ -68,12 +68,12 @@
     }
 </div>
 
-@MoreButton(Resource.GetString("TestMvcDemo.Articles.More"), "Index", "Articles")
+@MoreButton(Resources.GetString("TestMvcDemo.Articles.More"), "Index", "Articles")
 
 @if (!String.IsNullOrEmpty(Model.OurStory))
 {
     <div class="row">
-        <h1 class="title-tab">@Resource.GetString("TestMvcDemo.Story.Title")</h1>
+        <h1 class="title-tab">@Resources.GetString("TestMvcDemo.Story.Title")</h1>
         <div class="col-sm-12">
             <div class="ourstory-background-image center-text">
                 @Html.Raw(Model.OurStory)
@@ -81,12 +81,12 @@
         </div>
     </div>
 
-    @MoreButton(Resource.GetString("TestMvcDemo.Story.WholeStory"), "Index", "About")
+    @MoreButton(Resources.GetString("TestMvcDemo.Story.WholeStory"), "Index", "About")
 }
 
 <div class="row">
     <div>
-        <h1 class="title-tab">@Resource.GetString("TestMvcDemo.CompanyCafes.Title")</h1>
+        <h1 class="title-tab">@Resources.GetString("TestMvcDemo.CompanyCafes.Title")</h1>
     </div>
     @foreach (var cafe in @Model.CompanyCafes)
     {
@@ -95,11 +95,14 @@
                 <a href="@Url.Action("Index", "Cafes")" class="ourcoffee-tile-link">
                     <h2 class="ourcoffee-tile-text center-text">@cafe.CafeName</h2>
                     <span class="cafe-overlay"> </span>
-                    <img class="ourcoffee-tile-image" src="@Url.Attachment(cafe.CafePhoto, null)" alt="Cafe @cafe.CafeName">
-                </a>
+                    @if(cafe.CafePhoto !=  null)
+                    { 
+                    <img class="ourcoffee-tile-image" src="@Url.Kentico().Attachment(cafe.CafePhoto)" alt="Cafe @cafe.CafeName">
+                    }
+               </a>
             </div>
         </div>
     }
 </div>
 
-@MoreButton(Resource.GetString("TestMvcDemo.Cafes.More"), "Index", "Cafes")
+@MoreButton(Resources.GetString("TestMvcDemo.Cafes.More"), "Index", "Cafes")

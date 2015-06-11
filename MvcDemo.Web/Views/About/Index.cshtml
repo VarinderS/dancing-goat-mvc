@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CMS.DocumentEngine.Types.AboutUsSection>
 
 @{
-    ViewBag.Title = Resource.GetString("TestMvcDemo.AboutUs");
+    ViewBag.Title = Resources.GetString("TestMvcDemo.AboutUs");
     int i = 0;
 }
 
@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <img alt="@aboutSection.AboutUsSectionHeading" src="@Url.Attachment(aboutSection.AboutUsSectionImage, null)" class="img-responsive" />
+                <img alt="@aboutSection.AboutUsSectionHeading" src="@Url.Kentico().Attachment(aboutSection.AboutUsSectionImage)" class="img-responsive" />
             </div>
         }
         else
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="col-md-6 col-md-pull-6">
-                <img alt="@aboutSection.AboutUsSectionHeading" src="@Url.Attachment(aboutSection.AboutUsSectionImage, null)" class="img-responsive" />
+                <img alt="@aboutSection.AboutUsSectionHeading" src="@Url.Kentico().Attachment(aboutSection.AboutUsSectionImage)" class="img-responsive" />
             </div>
         }
     </section>

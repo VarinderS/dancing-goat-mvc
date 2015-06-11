@@ -1,6 +1,6 @@
 ﻿@model MvcDemo.Web.Models.Subscription.UnsubscriptionModel
 @{
-    ViewBag.Title = Resource.GetString("TestMvcDemo.News.Unsubscribtion");
+    ViewBag.Title = Resources.GetString("TestMvcDemo.News.Unsubscribtion");
 }
 
 <section class="row text-and-image">
@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="col-md-6">
-        <h2>@Resource.GetString(Model.IsError ? "TestMvcDemo.News.UnsubscribeError" : "TestMvcDemo.News.UnsubscribeOK")</h2>
+        <h2>@Resources.GetString(Model.IsError ? "TestMvcDemo.News.UnsubscribeError" : "TestMvcDemo.News.UnsubscribeOK")</h2>
         <p>
             @if (!String.IsNullOrEmpty(Model.UnsubscriptionResult))
             {

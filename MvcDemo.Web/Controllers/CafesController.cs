@@ -2,34 +2,42 @@
 using System.Linq;
 using System.Web.Mvc;
 
-using CMS.DocumentEngine.Types;
 using CMS.Base;
+using CMS.DocumentEngine.Types;
 
 using MvcDemo.Web.Models.Cafes;
 using MvcDemo.Web.Models.Contacts;
+using MvcDemo.Web.Repositories;
+using MvcDemo.Web.Services;
 
 namespace MvcDemo.Web.Controllers
 {
-    public class CafesController : BaseController
+    public class CafesController : Controller
     {
+        private readonly CafeRepository mCafeRepository;
+        private readonly CountryRepository mCountryRepository;
+        private readonly LocalizationService mLocalizationService;
+
+
+        public CafesController(CafeRepository cafeRepository, CountryRepository countryRepository, LocalizationService localizationService)
+        {
+            mLocalizationService = localizationService;
+            mCountryRepository = countryRepository;
+            mCafeRepository = cafeRepository;
+        }
+
+
         // GET: Cafes
         public ActionResult Index()
         {
-            var companyCafes = CafeProvider.GetCafes()
-                .OnSite("TestMvcDemo")
-                .WhereTrue("CafeIsCompanyCafe")
-                .OrderByDescending("DocumentPublishFrom")
-                .TopN(4);
+            var companyCafes = mCafeRepository.GetCompanyCafes(4);
 
             var viewModel = new Models.Cafes.IndexViewModel
             {
                 CompanyCafes = GetCompanyCafesModel(companyCafes)
             };
 
-            var partnerCafes = CafeProvider.GetCafes()
-                .OnSite("TestMvcDemo")
-                .WhereFalse("CafeIsCompanyCafe")
-                .OrderByDescending("DocumentPublishFrom");
+            var partnerCafes = mCafeRepository.GetPartnerCafes();
 
             viewModel.PartnerCafes = GetPartnerCafesModel(partnerCafes);
 
@@ -45,7 +53,7 @@ namespace MvcDemo.Web.Controllers
             foreach (var cafe in cafes)
             {
                 var city = cafe.City.ToLowerCSafe();
-                var contact = new ContactModel(cafe);
+                var contact = CreateContactModel(cafe);
 
                 if (cityCafes.ContainsKey(city))
                 {
@@ -67,8 +75,30 @@ namespace MvcDemo.Web.Controllers
             {
                 Photo = cafe.CafePhoto,
                 Note = cafe.CafeAdditionalNotes,
-                Contact = new ContactModel(cafe)
+                Contact = CreateContactModel(cafe)
             });
+        }
+
+
+        private ContactModel CreateContactModel(IContact contact)
+        {
+            var countryStateName = CountryStateName.Parse(contact.Country);
+            var country = mCountryRepository.GetCountry(countryStateName.CountryName);
+            var state = mCountryRepository.GetState(countryStateName.StateName);
+
+            var model = new ContactModel(contact)
+            {
+                CountryCode = country.CountryTwoLetterCode,
+                Country = mLocalizationService.LocalizeString(country.CountryDisplayName)
+            };
+
+            if (state != null)
+            {
+                model.StateCode = state.StateName;
+                model.State = mLocalizationService.LocalizeString(state.StateDisplayName);
+            }
+
+            return model;
         }
     }
 }

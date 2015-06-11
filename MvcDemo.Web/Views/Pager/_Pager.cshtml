@@ -12,7 +12,7 @@
     // "Previous" button rendering
     if (page > 1)
     {
-        <li><a class="pager-previous" href="@Model.CreateUrlForPageIndex(page - 1)">@Resource.GetString("general.previous")</a></li>
+        <li><a class="pager-previous" href="@Model.CreateUrlForPageIndex(page - 1)">@Resources.GetString("general.previous")</a></li>
     }
 
     // Pager items rendering
@@ -30,7 +30,7 @@
     // "Next" button rendering
     if (page < ((double)ds.TotalItemCount / ds.PageSize))
     {
-        <li><a class="pager-next" href="@Model.CreateUrlForPageIndex(page + 1)">@Resource.GetString("general.next")</a></li>
+        <li><a class="pager-next" href="@Model.CreateUrlForPageIndex(page + 1)">@Resources.GetString("general.next")</a></li>
     }
 
     @:</ul>

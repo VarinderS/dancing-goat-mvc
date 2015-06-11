@@ -1,19 +1,24 @@
 ﻿using System.Web.Mvc;
 
-using CMS.DocumentEngine.Types;
+using MvcDemo.Web.Repositories;
 
 namespace MvcDemo.Web.Controllers
 {
-    public class AboutController : BaseController
+    public class AboutController : Controller
     {
+        private readonly AboutUsRepository mAboutUsRepository;
+
+
+        public AboutController(AboutUsRepository aboutUsRepository)
+        {
+            mAboutUsRepository = aboutUsRepository;
+        }
+
+
         // GET: About
         public ActionResult Index()
         {
-            var sections = AboutUsSectionProvider.GetAboutUsSections()
-                                                 .OnSite("TestMvcDemo")
-                                                 .OrderBy("NodeOrder");
-
-            return View(sections);
+            return View(mAboutUsRepository.GetSideStories());
         }
     }
 }

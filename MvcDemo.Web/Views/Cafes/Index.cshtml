@@ -1,17 +1,20 @@
 ﻿@model MvcDemo.Web.Models.Cafes.IndexViewModel
 
 @{
-    ViewBag.Title = Resource.GetString("TestMvcDemo.Cafes");
+    ViewBag.Title = Resources.GetString("TestMvcDemo.Cafes");
 }
 
-<h2>@Resource.GetString("TestMvcDemo.CompanyCafes")</h2>
+<h2>@Resources.GetString("TestMvcDemo.CompanyCafes")</h2>
 <div class="row">
     @foreach (var cafe in Model.CompanyCafes)
     {
         <div class="col-md-6">
             <div class="cafe-image-tile cursor-hand js-scroll-to-map" data-address="@cafe.Contact.City,@cafe.Contact.Street">
                 <div class="cafe-image-tile-image-wrapper">
-                    <img alt="Cafe @cafe.Contact.Name" src="@Url.Attachment(cafe.Photo, null)" class="cafe-image-tile-image">
+                    @if (cafe.Photo != null)
+                    {
+                        <img alt="Cafe @cafe.Contact.Name" src="@Url.Kentico().Attachment(cafe.Photo)" class="cafe-image-tile-image">
+                    }
                 </div>
                 <div class="cafe-image-tile-content">
                     <h3 class="cafe-image-tile-name">@cafe.Contact.Name</h3>
@@ -30,7 +33,7 @@
     }
 </div>
 
-<h2>@Resource.GetString("TestMvcDemo.PartnerCafes.Title")</h2>
+<h2>@Resources.GetString("TestMvcDemo.PartnerCafes.Title")</h2>
 <div class="row">
     @foreach (var city in Model.PartnerCafes.Keys)
     {
@@ -38,8 +41,8 @@
         foreach (var contact in Model.PartnerCafes[city])
         {
             if (first)
-            {   @*Display city information only once*@
-            <h3>@contact.City, @contact.Country, @contact.State</h3>
+            {
+                <h3>@GetCafeAddress(contact)</h3>
             }
             <p>
                 @contact.Name, @contact.Street, @contact.Phone
@@ -49,8 +52,15 @@
     }
 </div>
 
-<h2 class="map-title">@Resource.GetString("TestMvcDemo.Cafes.MapTitle")</h2>
+<h2 class="map-title">@Resources.GetString("TestMvcDemo.Cafes.MapTitle")</h2>
 <div class="map js-map"></div>
+
+@helper GetCafeAddress(MvcDemo.Web.Models.Contacts.ContactModel model)
+{
+    var tokens = new string[] { model.City, model.Country, model.State };
+
+    @String.Join(", ", tokens.Where(x => !String.IsNullOrEmpty(x)));
+}
 
 @section Scripts {
     <script src="https://maps.googleapis.com/maps/api/js"></script>

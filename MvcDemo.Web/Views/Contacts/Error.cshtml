@@ -1,8 +1,8 @@
 ﻿@{
-    ViewBag.Title = Resource.GetString("general.error");
+    ViewBag.Title = Resources.GetString("general.error");
 }
 
-<h2>@Resource.GetString("TestMvcDemo.ContactUs.ErrorSending")</h2>
+<h2>@Resources.GetString("TestMvcDemo.ContactUs.ErrorSending")</h2>
 <div class="error-label">
-    @Html.Raw(Resource.FormatString("TestMvcDemo.ContactUs.ErrorText", Html.ActionLink("Contact", "Index")))
+    @Html.Raw(Resources.FormatString("TestMvcDemo.ContactUs.ErrorText", Html.ActionLink("Contact", "Index")))
 </div>

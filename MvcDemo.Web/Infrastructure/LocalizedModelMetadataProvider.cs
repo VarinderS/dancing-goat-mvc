@@ -10,7 +10,7 @@ using CMS.Helpers;
 namespace MvcDemo.Web.Infrastructure
 {
     /// <summary>
-    /// Provides localization for the data annotation attributes
+    /// Provides localization for the data annotation attributes.
     /// </summary>
     public class LocalizedModelMetadataProvider : DataAnnotationsModelMetadataProvider
     {

@@ -6,7 +6,7 @@ namespace MvcDemo.Web.Models.Subscription
     public class SubscribeModel
     {
         [Required(ErrorMessage = "general.requireemail")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "general.correctemailformat")]
         [DisplayName("TestMvcDemo.News.SubscriberEmail")]
         [MaxLength(250, ErrorMessage = "TestMvcDemo.News.LongEmail")]
         public string Email

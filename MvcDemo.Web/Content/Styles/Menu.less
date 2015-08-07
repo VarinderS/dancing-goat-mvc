@@ -230,19 +230,18 @@ ul.dropdown-items-list a, ul.dropdown-items-list li {
     padding-left: 2rem;
 }
 
+.dropdown-desktop, ul.dropdown-items-list.dropdown-desktop-visible {
+    display: block;
+    position: static;
+}
+
+ul.dropdown-items-list.dropdown-desktop-visible li, ul.dropdown-items-list.dropdown-desktop-visible a {
+    float: left;
+}
+
 @media (min-width: 768px) and (max-width: 1111px) {
     .dropdown-icon-tablet {
         display: block;
     }
 }
 
-@media (min-width: 1112px) {
-    .dropdown-desktop, ul.dropdown-items-list.dropdown-desktop-visible {
-        display: block;
-        position: static;
-    }
-
-    ul.dropdown-items-list.dropdown-desktop-visible li, ul.dropdown-items-list.dropdown-desktop-visible a {
-        float: left;
-    }
-}

@@ -3,7 +3,9 @@ using System.Linq;
 using System.Web.Mvc;
 
 using CMS.DocumentEngine.Types;
+using CMS.Globalization;
 
+using MvcDemo.Web.Infrastructure;
 using MvcDemo.Web.Models.Contacts;
 using MvcDemo.Web.Repositories;
 using MvcDemo.Web.Services;
@@ -12,17 +14,18 @@ namespace MvcDemo.Web.Controllers
 {
     public class ContactsController : Controller
     {
-        private readonly CafeRepository mCafeRepository;
-        private readonly ContactRepository mContactRepository;
-        private readonly CountryRepository mCountryRepository;
-        private readonly FormItemRepository mFormItemRepository;
+        private readonly ICafeRepository mCafeRepository;
+        private readonly IContactRepository mContactRepository;
+        private readonly ICountryRepository mCountryRepository;
+        private readonly IFormItemRepository mFormItemRepository;
         private readonly LocalizationService mLocalizationService;
-        private readonly SocialLinkRepository mSocialLinkRepository;
+        private readonly ISocialLinkRepository mSocialLinkRepository;
+        private readonly IOutputCacheDependencies mOutputCacheDependencies;
 
 
-        public ContactsController(CafeRepository cafeRepository, SocialLinkRepository socialLinkRepository,
-            ContactRepository contactRepository, FormItemRepository formItemRepository,
-            CountryRepository countryRepository, LocalizationService localizationService)
+        public ContactsController(ICafeRepository cafeRepository, ISocialLinkRepository socialLinkRepository,
+            IContactRepository contactRepository, IFormItemRepository formItemRepository,
+            ICountryRepository countryRepository, LocalizationService localizationService, IOutputCacheDependencies outputCacheDependencies)
         {
             mLocalizationService = localizationService;
             mCountryRepository = countryRepository;
@@ -30,14 +33,21 @@ namespace MvcDemo.Web.Controllers
             mCafeRepository = cafeRepository;
             mSocialLinkRepository = socialLinkRepository;
             mContactRepository = contactRepository;
+            mOutputCacheDependencies = outputCacheDependencies;
         }
 
 
         // GET: Contacts
+        [OutputCache(CacheProfile = "Default", VaryByParam = "none")]
         public ActionResult Index()
         {
             var model = GetIndexViewModel();
             model.Message = new MessageModel();
+
+            mOutputCacheDependencies.AddDependencyOnPages<Cafe>();
+            mOutputCacheDependencies.AddDependencyOnPages<Contact>();
+            mOutputCacheDependencies.AddDependencyOnInfoObjects<CountryInfo>();
+            mOutputCacheDependencies.AddDependencyOnInfoObjects<StateInfo>();
 
             return View(model);
         }
@@ -86,6 +96,11 @@ namespace MvcDemo.Web.Controllers
         {
             var address = GetCompanyContactModel();
 
+            mOutputCacheDependencies.AddDependencyOnPages<Cafe>();
+            mOutputCacheDependencies.AddDependencyOnPages<Contact>();
+            mOutputCacheDependencies.AddDependencyOnInfoObjects<CountryInfo>();
+            mOutputCacheDependencies.AddDependencyOnInfoObjects<StateInfo>();
+
             return PartialView("_Address", address);
         }
 
@@ -94,7 +109,11 @@ namespace MvcDemo.Web.Controllers
         [ValidateInput(false)]
         public ActionResult CompanySocialLinks()
         {
-            return PartialView("_SocialLinks", mSocialLinkRepository.GetSocialLinks());
+            var socialLinks = mSocialLinkRepository.GetSocialLinks();
+
+            mOutputCacheDependencies.AddDependencyOnPages<SocialLink>();
+
+            return PartialView("_SocialLinks", socialLinks);
         }
 
 

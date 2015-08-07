@@ -52,9 +52,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac.Extras.DynamicProxy2, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Extras.DynamicProxy2.3.0.7\lib\net40\Autofac.Extras.DynamicProxy2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Autofac.Integration.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.Mvc5.3.3.4\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.3.2.2\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="CMS.AmazonStorage, Version=9.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9">
       <HintPath>..\..\CMSSolution\CMS\bin\CMS.AmazonStorage.dll</HintPath>
@@ -506,7 +514,9 @@
     <Content Include="Views\Subscription\Unsubscribe.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Pager\_Pager.cshtml" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Shared\NotFound.cshtml" />
     <None Include="Views\_ViewStart.cshtml" />
     <Content Include="Web.config">
@@ -522,7 +532,12 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\HttpErrorsController.cs" />
     <Compile Include="Infrastructure\ActionInvokerWrapper.cs" />
+    <Compile Include="Infrastructure\CachingRepositoryDecorator.cs" />
+    <Compile Include="Infrastructure\ContentItemMetadataProvider.cs" />
     <Compile Include="Infrastructure\ControllerFactoryWrapper.cs" />
+    <Compile Include="Infrastructure\IContentItemMetadataProvider.cs" />
+    <Compile Include="Infrastructure\IOutputCacheDependencies.cs" />
+    <Compile Include="Infrastructure\OutputCacheDependencies.cs" />
     <Compile Include="Infrastructure\Validation\LocalizedDataTypeAttributeAdapter.cs" />
     <Compile Include="Infrastructure\Validation\LocalizationHelper.cs" />
     <Compile Include="Infrastructure\HandleNotFoundErrorAttribute.cs" />
@@ -530,8 +545,12 @@
     <Compile Include="Infrastructure\Validation\LocalizedRegularExpressionAttributeAdapter.cs" />
     <Compile Include="Infrastructure\Validation\LocalizedRangeAttributeAdapter.cs" />
     <Compile Include="Infrastructure\Validation\LocalizedStringLengthAttributeAdapter.cs" />
-    <Compile Include="Repositories\AboutUsRepository.cs" />
-    <Compile Include="Repositories\ArticleRepository.cs" />
+    <Compile Include="Models\Generated\Pages\ArticleSection.generated.cs" />
+    <Compile Include="Models\Generated\Pages\ArticleSectionProvider.generated.cs" />
+    <Compile Include="Models\Generated\Pages\CafeSection.generated.cs" />
+    <Compile Include="Models\Generated\Pages\CafeSectionProvider.generated.cs" />
+    <Compile Include="Repositories\IAboutUsRepository.cs" />
+    <Compile Include="Repositories\IArticleRepository.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\CafesController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
@@ -543,8 +562,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Extensions\HtmlHelperExtensions.cs" />
-    <Compile Include="Repositories\CountryRepository.cs" />
-    <Compile Include="Repositories\FormItemRepository.cs" />
+    <Compile Include="Repositories\ICountryRepository.cs" />
+    <Compile Include="Repositories\IFormItemRepository.cs" />
     <Compile Include="Repositories\Implementation\KenticoAboutUsRepository.cs" />
     <Compile Include="Repositories\Implementation\KenticoArticleRepository.cs" />
     <Compile Include="Repositories\Implementation\KenticoCafeRepository.cs" />
@@ -586,9 +605,9 @@
     <Compile Include="Models\Search\SearchResultItem.cs" />
     <Compile Include="Models\Search\SearchResults.cs" />
     <Compile Include="Models\Pager\IPagedDataSource.cs" />
-    <Compile Include="Repositories\CafeRepository.cs" />
-    <Compile Include="Repositories\ContactRepository.cs" />
-    <Compile Include="Repositories\SocialLinkRepository.cs" />
+    <Compile Include="Repositories\ICafeRepository.cs" />
+    <Compile Include="Repositories\IContactRepository.cs" />
+    <Compile Include="Repositories\ISocialLinkRepository.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Models\Subscription\SubscribeModel.cs" />
     <Compile Include="Models\Subscription\UnsubscriptionModel.cs" />

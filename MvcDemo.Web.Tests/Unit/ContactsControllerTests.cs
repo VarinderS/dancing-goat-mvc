@@ -8,9 +8,11 @@ using CMS.Globalization;
 using CMS.Tests;
 
 using MvcDemo.Web.Controllers;
+using MvcDemo.Web.Infrastructure;
 using MvcDemo.Web.Models.Contacts;
 using MvcDemo.Web.Repositories;
 using MvcDemo.Web.Services;
+
 using NSubstitute;
 using NUnit.Framework;
 using TestStack.FluentMVCTesting;
@@ -22,7 +24,7 @@ namespace MvcDemo.Web.Tests.Unit
     {
         private ContactsController mController;
         private MessageModel mMessageModel;
-        private FormItemRepository mFormItemRepository;
+        private IFormItemRepository mFormItemRepository;
 
 
         [SetUp]
@@ -34,20 +36,21 @@ namespace MvcDemo.Web.Tests.Unit
 
             var country = new CountryInfo { CountryName = "USA", CountryTwoLetterCode = "US" };
             var state = new StateInfo { StateName = "Illinois", StateDisplayName = "Illinois" };
-            var contact = TreeNode.New<Contact>().With(x => x.ContactCountry = "USA;Illinois");
+            var contact = TreeNode.New<Contact>().With(x => x.Fields.Country = "USA;Illinois");
 
-            var socialLinkRepository = Substitute.For<SocialLinkRepository>();
-            var cafeRepository = Substitute.For<CafeRepository>();
-            var contactRepository = Substitute.For<ContactRepository>();
-            var countryRepository = Substitute.For<CountryRepository>();
+            var socialLinkRepository = Substitute.For<ISocialLinkRepository>();
+            var cafeRepository = Substitute.For<ICafeRepository>();
+            var contactRepository = Substitute.For<IContactRepository>();
+            var countryRepository = Substitute.For<ICountryRepository>();
             var localizationService = Substitute.For<LocalizationService>();
+            var outputCacheDependencies = Substitute.For<IOutputCacheDependencies>();
             
             contactRepository.GetCompanyContact().Returns(contact);
             countryRepository.GetCountry(country.CountryName).Returns(country);
             countryRepository.GetState(state.StateName).Returns(state);
 
-            mFormItemRepository = Substitute.For<FormItemRepository>();
-            mController = new ContactsController(cafeRepository, socialLinkRepository, contactRepository, mFormItemRepository, countryRepository, localizationService);
+            mFormItemRepository = Substitute.For<IFormItemRepository>();
+            mController = new ContactsController(cafeRepository, socialLinkRepository, contactRepository, mFormItemRepository, countryRepository, localizationService, outputCacheDependencies);
             mMessageModel = CreateMessageModel();
         }
 

@@ -15,6 +15,9 @@ using SearchResults = MvcDemo.Web.Models.Search.SearchResults;
 
 namespace MvcDemo.Web.Services
 {
+    /// <summary>
+    /// Provides access to Kentico smart search.
+    /// </summary>
     public class SearchService
     {
         #region "Variables"
@@ -136,16 +139,16 @@ namespace MvcDemo.Web.Services
             foreach (DataRow row in mRawResults.Tables[0].Rows)
             {
                 string date, pageTypeDisplayName, pageTypeCodeName;
-                int documentId;
+                int nodeId;
                 var documentNodeId = GetDocumentNodeId(row["type"], row["id"]);
                 var guid = ((row["image"] as string) == null) ? Guid.Empty : new Guid(row["image"].ToString());
                 attachmentIdentifiers.Add(guid);
 
-                GetAdditionalData(row["type"], documentNodeId, out date, out documentId, out pageTypeDisplayName, out pageTypeCodeName);
+                GetAdditionalData(row["type"], documentNodeId, out date, out nodeId, out pageTypeDisplayName, out pageTypeCodeName);
 
                 var searchItem = new SearchResultItem
                 {
-                    DocumentId = documentId,
+                    NodeId = nodeId,
                     Title = row["title"].ToString(),
                     Content = row["content"].ToString(),
                     Date = date,
@@ -176,11 +179,11 @@ namespace MvcDemo.Web.Services
         /// <param name="type">Type</param>
         /// <param name="documentNodeId">DocumentNodeID</param>
         /// <param name="date">Last modified date</param>
-        /// <param name="documentId">DocumentID</param>
+        /// <param name="nodeId">NodeID</param>
         /// <param name="pageTypeDisplayName">Page type display name</param>
         /// <param name="pageTypeCodeName">Page type code name</param>
         /// <returns>True if some additional data were found</returns>
-        private static bool GetAdditionalData(object type, int documentNodeId, out string date, out int documentId, out string pageTypeDisplayName, out string pageTypeCodeName)
+        private static bool GetAdditionalData(object type, int documentNodeId, out string date, out int nodeId, out string pageTypeDisplayName, out string pageTypeCodeName)
         {
             foreach (var key in SearchContext.CurrentSearchResults.Keys)
             {
@@ -189,7 +192,7 @@ namespace MvcDemo.Web.Services
                     var row = (DataRow)SearchContext.CurrentSearchResults[key];
 
                     date = row["DocumentModifiedWhen"].ToString();
-                    documentId = ValidationHelper.GetInteger(row["DocumentID"], 0);
+                    nodeId = ValidationHelper.GetInteger(row["NodeID"], 0);
                     pageTypeDisplayName = row["ClassDisplayName"].ToString();
                     pageTypeCodeName = row["ClassName"].ToString();
 
@@ -198,7 +201,7 @@ namespace MvcDemo.Web.Services
             }
 
             date = pageTypeDisplayName = pageTypeCodeName = "";
-            documentId = 0;
+            nodeId = 0;
             return false;
         }
 

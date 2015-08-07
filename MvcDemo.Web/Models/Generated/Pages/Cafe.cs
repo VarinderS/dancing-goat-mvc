@@ -11,7 +11,7 @@ namespace CMS.DocumentEngine.Types
         {
             get
             {
-                return CafeName;
+                return Fields.Name;
             }
         }
 
@@ -20,7 +20,7 @@ namespace CMS.DocumentEngine.Types
         {
             get
             {
-                return CafePhone;
+                return Fields.Phone;
             }
         }
 
@@ -38,7 +38,7 @@ namespace CMS.DocumentEngine.Types
         {
             get
             {
-                return CafeZipCode;
+                return Fields.ZipCode;
             }
         }
 
@@ -47,7 +47,7 @@ namespace CMS.DocumentEngine.Types
         {
             get
             {
-                return CafeStreet;
+                return Fields.Street;
             }
         }
 
@@ -56,7 +56,7 @@ namespace CMS.DocumentEngine.Types
         {
             get
             {
-                return CafeCity;
+                return Fields.City;
             }
         }
 
@@ -65,7 +65,7 @@ namespace CMS.DocumentEngine.Types
         {
             get
             {
-                return CafeCountry;
+                return Fields.Country;
             }
         }
     }

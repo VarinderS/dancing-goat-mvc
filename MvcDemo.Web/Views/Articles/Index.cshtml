@@ -9,18 +9,18 @@
 {
     <div class="col-md-3">
         <div class="article-tile">
-            <a href="@Url.Action("Show", "Articles", new { id = article.DocumentID })">
-                <img alt="Article @article.ArticleTitle" src="@Url.Kentico().Attachment(article.ArticleTeaser, SizeConstraint.Height(200))" class="article-tile-image">
+            <a href="@Url.Action("Show", "Articles", new { id = article.NodeID })">
+                @Html.AttachmentImage(article.Fields.Teaser, "Article " + article.Fields.Title, "article-tile-image", SizeConstraint.Height(200))
             </a>
             <div class="article-tile-date">
                 @article.PublicationDate.ToString("m")
             </div>
             <div class="article-tile-content">
                 <h2 class="h4">
-                    <a href="@Url.Action("Show", "Articles" , new { id=article.DocumentID })">@article.ArticleTitle</a>
+                    <a href="@Url.Action("Show", "Articles" , new { id=article.NodeID })">@article.Fields.Title </a>
                 </h2>
                 <p class="article-tile-text">
-                    @article.ArticleSummary
+                    @article.Fields.Summary
                 </p>
             </div>
         </div>
@@ -31,3 +31,4 @@
     }
     i++;
 }
+@DateTime.Now.ToLongTimeString()

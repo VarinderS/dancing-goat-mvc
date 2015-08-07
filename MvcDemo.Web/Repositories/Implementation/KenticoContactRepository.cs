@@ -1,14 +1,18 @@
-﻿using CMS.DocumentEngine.Types;
+﻿using System;
+using System.Linq;
+
+using CMS.DocumentEngine.Types;
 
 namespace MvcDemo.Web.Repositories.Implementation
 {
     /// <summary>
     /// Represents a collection of contact information.
     /// </summary>
-    public class KenticoContactRepository : ContactRepository
+    public class KenticoContactRepository : IContactRepository
     {
         private readonly string mSiteName;
         private readonly string mCultureName;
+        private readonly bool mLatestVersionEnabled;
 
 
         /// <summary>
@@ -16,10 +20,12 @@ namespace MvcDemo.Web.Repositories.Implementation
         /// </summary>
         /// <param name="siteName">The code name of a site.</param>
         /// <param name="cultureName">The name of a culture.</param>
-        public KenticoContactRepository(string siteName, string cultureName)
+        /// <param name="latestVersionEnabled">Indicates whether the repository will provide the most recent version of pages.</param>
+        public KenticoContactRepository(string siteName, string cultureName, bool latestVersionEnabled)
         {
             mSiteName = siteName;
             mCultureName = cultureName;
+            mLatestVersionEnabled = latestVersionEnabled;
         }
 
 
@@ -27,12 +33,14 @@ namespace MvcDemo.Web.Repositories.Implementation
         /// Returns company's contact information.
         /// </summary>
         /// <returns>Company's contact information, if found; otherwise, null.</returns>
-        public override Contact GetCompanyContact()
+        public Contact GetCompanyContact()
         {
             return ContactProvider.GetContacts()
+                .LatestVersion(mLatestVersionEnabled)
+                .Published(!mLatestVersionEnabled)
                 .OnSite(mSiteName)
                 .Culture(mCultureName)
-                .FirstObject;
+                .TopN(1);
         }
     }
 }

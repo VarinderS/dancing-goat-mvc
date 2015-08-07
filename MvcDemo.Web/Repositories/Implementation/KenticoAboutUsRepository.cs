@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using CMS.DocumentEngine.Types;
 
@@ -7,10 +9,11 @@ namespace MvcDemo.Web.Repositories.Implementation
     /// <summary>
     /// Represents a collection of stories about company's strategy, history and philosophy.
     /// </summary>
-    public sealed class KenticoAboutUsRepository : AboutUsRepository
+    public class KenticoAboutUsRepository : IAboutUsRepository
     {
         private readonly string mSiteName;
         private readonly string mCultureName;
+        private readonly bool mLatestVersionEnabled;
 
 
         /// <summary>
@@ -18,10 +21,12 @@ namespace MvcDemo.Web.Repositories.Implementation
         /// </summary>
         /// <param name="siteName">The code name of a site.</param>
         /// <param name="cultureName">The name of a culture.</param>
-        public KenticoAboutUsRepository(string siteName, string cultureName)
+        /// <param name="latestVersionEnabled">Indicates whether the repository will provide the most recent version of pages.</param>
+        public KenticoAboutUsRepository(string siteName, string cultureName, bool latestVersionEnabled)
         {
             mSiteName = siteName;
             mCultureName = cultureName;
+            mLatestVersionEnabled = latestVersionEnabled;
         }
 
         
@@ -29,12 +34,14 @@ namespace MvcDemo.Web.Repositories.Implementation
         /// Returns the story that describes company's strategy and history.
         /// </summary>
         /// <returns>The story that describes company's strategy and history, if found; otherwise, null.</returns>
-        public override AboutUs GetOurStory()
+        public AboutUs GetOurStory()
         {
             return AboutUsProvider.GetAboutUs()
+                .LatestVersion(mLatestVersionEnabled)
+                .Published(!mLatestVersionEnabled)
                 .OnSite(mSiteName)
                 .Culture(mCultureName)
-                .FirstObject;
+                .TopN(1);
         }
 
 
@@ -42,9 +49,11 @@ namespace MvcDemo.Web.Repositories.Implementation
         /// Returns an enumerable collection of stories about company's philosophy ordered by a position in the content tree.
         /// </summary>
         /// <returns>An enumerable collection of stories about company's philosophy ordered by a position in the content tree.</returns>
-        public override IEnumerable<AboutUsSection> GetSideStories()
+        public IEnumerable<AboutUsSection> GetSideStories()
         {
             return AboutUsSectionProvider.GetAboutUsSections()
+                .LatestVersion(mLatestVersionEnabled)
+                .Published(!mLatestVersionEnabled)
                 .OnSite(mSiteName)
                 .Culture(mCultureName)
                 .OrderBy("NodeOrder");

@@ -1,29 +1,39 @@
 ﻿using System.Web.Mvc;
 
-using MvcDemo.Web.Repositories;
+using CMS.DocumentEngine.Types;
+
 using MvcDemo.Web.Infrastructure;
+using MvcDemo.Web.Repositories;
 
 namespace MvcDemo.Web.Controllers
 {
     public class ArticlesController : Controller
     {
-        private readonly ArticleRepository mArticleRepository;
+        private readonly IArticleRepository mArticleRepository;
+        private readonly IOutputCacheDependencies mOutputCacheDependencies;
 
 
-        public ArticlesController(ArticleRepository repository)
+        public ArticlesController(IArticleRepository repository, IOutputCacheDependencies outputCacheDependencies)
         {
             mArticleRepository = repository;
+            mOutputCacheDependencies = outputCacheDependencies;
         }
 
 
         // GET: Articles
+        [OutputCache(CacheProfile="Default", VaryByParam="none")]
         public ActionResult Index()
         {
-            return View(mArticleRepository.GetLatestArticles());
+            var articles = mArticleRepository.GetArticles();
+
+            mOutputCacheDependencies.AddDependencyOnPages<Article>();
+
+            return View(articles);
         }
 
 
         // GET: Articles/Show/{id}
+        [OutputCache(CacheProfile = "Default", VaryByParam = "id")]
         public ActionResult Show(int id = 0)
         {
             var article = mArticleRepository.GetArticle(id);
@@ -32,6 +42,8 @@ namespace MvcDemo.Web.Controllers
             {
                 return HttpNotFound();
             }
+
+            mOutputCacheDependencies.AddDependencyOnPages<Article>();
 
             return View(article);
         }

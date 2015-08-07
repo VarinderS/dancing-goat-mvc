@@ -1,26 +1,24 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Configuration;
+using System.Globalization;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-using CMS.DataEngine;
-
 using Autofac;
+using Autofac.Extras.DynamicProxy2;
 using Autofac.Integration.Mvc;
+using Kentico.Web.Mvc;
 using MvcDemo.Web.Infrastructure;
-using MvcDemo.Web.Repositories;
-using MvcDemo.Web.Services;
-
-using LocalizationService = MvcDemo.Web.Services.LocalizationService;
-using MvcDemo.Web.Repositories.Implementation;
 
 namespace MvcDemo.Web
 {
-    public class MvcApplication : HttpApplication
+    public class MvcDemoApplication : HttpApplication
     {
         public const string INDEX_NAME = "TestMvcDemo.Index";
         public const string SITE_NAME = "TestMvcDemo";
+
 
         protected void Application_Start()
         {
@@ -29,16 +27,16 @@ namespace MvcDemo.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
-            // Enable localization for the data annotation attributes
+            // Enable localization of ASP.NET MVC model validation
             LocalizationConfig.RegisterLocalizationServices();
 
-            // Configure the MVC application to use the same smart search indexes as the CMS application
+            // Configure the application to use the same smart search indexes as Kentico
             StorageMappingConfig.ConfigureStorageMapping();
 
             // Register dependency injection container
             RegisterAutofac();
 
-            // Handle NotFound exceptions and display custom view instead of default IIS pages.
+            // Handle NotFound exceptions and display custom view instead of default IIS pages
             ControllerBuilder.Current.SetControllerFactory(
                 new ControllerFactoryWrapper(
                     ControllerBuilder.Current.GetControllerFactory()
@@ -47,42 +45,77 @@ namespace MvcDemo.Web
         }
 
 
-        protected void Application_BeginRequest()
-        {
-            CMSApplication.Init();
-        }
-
-
         private void RegisterAutofac()
         {
             var builder = new ContainerBuilder();
 
-            // Register Property Injection for View Pages
+            // Enable property injection in view pages
             builder.RegisterSource(new ViewRegistrationSource());
 
-            // Register MVC controllers.
-            builder.RegisterControllers(typeof(MvcApplication).Assembly);
+            // Register web abstraction classes
+            builder.RegisterModule<AutofacWebTypesModule>();
+
+            // Register controllers
+            builder.RegisterControllers(typeof(MvcDemoApplication).Assembly);
 
             // Register repositories
-            builder.Register(context => new KenticoArticleRepository(SITE_NAME, CultureInfo.CurrentUICulture.Name)).As<ArticleRepository>().InstancePerRequest();
-            builder.Register(context => new KenticoFormItemRepository()).As<FormItemRepository>().InstancePerRequest();
-            builder.Register(context => new KenticoCafeRepository(SITE_NAME, CultureInfo.CurrentUICulture.Name)).As<CafeRepository>().InstancePerRequest();
-            builder.Register(context => new KenticoAboutUsRepository(SITE_NAME, CultureInfo.CurrentUICulture.Name)).As<AboutUsRepository>().InstancePerRequest();
-            builder.Register(context => new KenticoContactRepository(SITE_NAME, CultureInfo.CurrentUICulture.Name)).As<ContactRepository>().InstancePerRequest();
-            builder.Register(context => new KenticoSocialLinkRepository(SITE_NAME, CultureInfo.CurrentUICulture.Name)).As<SocialLinkRepository>().InstancePerRequest();
-            builder.Register(context => new KenticoCountryRepository()).As<CountryRepository>().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(MvcDemoApplication).Assembly).Where(x => x.IsClass && !x.IsAbstract && x.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces()
+                .WithParameter("siteName", SITE_NAME)
+                .WithParameter((parameter, context) => parameter.Name == "cultureName", (parameter, context) => CultureInfo.CurrentUICulture.Name)
+                .WithParameter((parameter, context) => parameter.Name == "latestVersionEnabled", (parameter, context) => IsPreviewEnabled())
+                .EnableInterfaceInterceptors().InterceptedBy(typeof(CachingRepositoryDecorator))
+                .InstancePerRequest();
+
+            // Register services
+            builder.RegisterAssemblyTypes(typeof(MvcDemoApplication).Assembly).Where(x => x.IsClass && !x.IsAbstract && x.Name.EndsWith("Service"))
+                .WithParameter("siteName", SITE_NAME)
+                .WithParameter("searchIndexName", INDEX_NAME)
+                .WithParameter((parameter, context) => parameter.Name == "cultureName", (parameter, context) => CultureInfo.CurrentUICulture.Name)
+                .InstancePerRequest();
+
+            // Register providers of additional information about content items
+            builder.RegisterType<ContentItemMetadataProvider>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+
+            // Register caching decorator for repositories
+            builder.Register(context => new CachingRepositoryDecorator(SITE_NAME, GetCacheItemDuration(), context.Resolve<IContentItemMetadataProvider>(), IsCacheEnabled()))
+                .InstancePerRequest();
+
+            // Enable declaration of output cache dependencies in controllers
+            builder.Register(context => new OutputCacheDependencies(SITE_NAME, context.Resolve<HttpResponseBase>(), context.Resolve<IContentItemMetadataProvider>(), IsCacheEnabled()))
+                .AsImplementedInterfaces()
+                .InstancePerRequest();
+
+            // Set the ASP.NET MVC dependency resolver
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(builder.Build()));
+        }
 
 
-            // Register services - the most general registration is first
-            builder.RegisterAssemblyTypes(typeof(MvcApplication).Assembly).Where(t => t.Name.EndsWith("Service"));
-            builder.Register(context => new SearchService(INDEX_NAME, CultureInfo.CurrentUICulture.Name, SITE_NAME)).InstancePerRequest();
-                                            
-            // Register property injection for LocalizationService
-            builder.RegisterType<LocalizationService>().PropertiesAutowired();
+        private static bool IsCacheEnabled()
+        {
+            return !IsPreviewEnabled();
+        }
 
-            // Set the dependency resolver to be Autofac.
-            var container = builder.Build();
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
+        private static bool IsPreviewEnabled()
+        {
+            return HttpContext.Current.Kentico().Preview().Enabled;
+        }
+
+
+        private static TimeSpan GetCacheItemDuration()
+        {
+            var value = ConfigurationManager.AppSettings["RepositoryCacheItemDuration"];
+            var seconds = 0;
+
+            if (Int32.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out seconds) && seconds > 0)
+            {
+                return TimeSpan.FromSeconds(seconds);
+            }
+
+            return TimeSpan.Zero;
         }
     }
 }

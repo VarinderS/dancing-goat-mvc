@@ -11,7 +11,7 @@ namespace CMS.DocumentEngine.Types
         {
             get
             {
-                return ContactName;
+                return Fields.Name;
             }
         }
 
@@ -20,7 +20,7 @@ namespace CMS.DocumentEngine.Types
         {
             get
             {
-                return ContactPhone;
+                return Fields.Phone;
             }
         }
 
@@ -29,7 +29,7 @@ namespace CMS.DocumentEngine.Types
         {
             get
             {
-                return ContactEmail;
+                return Fields.Email;
             }
         }
 
@@ -38,7 +38,7 @@ namespace CMS.DocumentEngine.Types
         {
             get
             {
-                return ContactZipCode;
+                return Fields.ZipCode;
             }
         }
 
@@ -47,7 +47,7 @@ namespace CMS.DocumentEngine.Types
         {
             get
             {
-                return ContactStreet;
+                return Fields.Street;
             }
         }
 
@@ -56,7 +56,7 @@ namespace CMS.DocumentEngine.Types
         {
             get
             {
-                return ContactCity;
+                return Fields.City;
             }
         }
 
@@ -65,7 +65,7 @@ namespace CMS.DocumentEngine.Types
         {
             get
             {
-                return ContactCountry;
+                return Fields.Country;
             }
         }
     }

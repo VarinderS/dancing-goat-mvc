@@ -24,12 +24,12 @@ else
             <div class="col-md-4 col-lg-3">
                 @if (item.ImageAttachment != null)
                 {
-                    <a href="@GetUrl(item.PageTypeCodeName, item.DocumentId)" title="@item.Title"><img class="img-responsive" src="@Url.Kentico().Attachment(item.ImageAttachment)" alt="@item.Title" /></a>
+                    <a href="@GetUrl(item.PageTypeCodeName, item.NodeId)" title="@item.Title">@Html.AttachmentImage(item.ImageAttachment, item.Title, "img-responsive")</a>
                 }
             </div>
             <div class="col-md-8 col-lg-9 search-tile-content">
                 <h3 class="h4 search-tile-title">
-                    <a href="@GetUrl(item.PageTypeCodeName, item.DocumentId)">@item.Title</a>
+                    <a href="@GetUrl(item.PageTypeCodeName, item.NodeId)">@item.Title</a>
                 </h3>
                 <div class="search-tile-badge">@item.PageTypeDispayName</div>
                 <div class="search-tile-subtitle">@item.Date</div>
@@ -41,7 +41,7 @@ else
     @Html.Action("Index", "Pager", new PagerModel { DataSource = Model, CreateUrlForPageIndex = i => Url.Action("Index", "Search", new { searchText = Model.Query, page = i }) })
 }
 
-@helper GetUrl(string pageTypeCodeName, int documentId)
+@helper GetUrl(string pageTypeCodeName, int nodeId)
 {
     switch (pageTypeCodeName)
     {
@@ -49,7 +49,7 @@ else
             @Url.Action("Index", "Cafes")
             break;
         case "TestMvcDemo.Article":
-        @Url.Action("Show", "Articles", new { id = documentId })
+        @Url.Action("Show", "Articles", new { id = nodeId })
             break;
         case "TestMvcDemo.AboutUsSection":
         @Url.Action("Index", "About")

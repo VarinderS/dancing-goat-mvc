@@ -5,7 +5,7 @@ using MvcDemo.Web.Services;
 namespace MvcDemo.Web.Infrastructure
 {
     /// <summary>
-    /// Represents a view with localization service available.
+    /// Represents the services thar are needed in order to render a view.
     /// </summary>
     public abstract class CustomViewPage : WebViewPage
     {

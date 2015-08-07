@@ -20,7 +20,7 @@ namespace MvcDemo.Web
                                   constraints: new { culture = new SiteCultureConstraint("TestMvcDemo") }
                                 );
 
-            // Set the correct thread culture
+            // Set the correct thread culture and indicate preview mode
             route.RouteHandler = new MultiCultureMvcRouteHandler(defaultCulture);
 
             // No usable route found, go to (404) Not found 

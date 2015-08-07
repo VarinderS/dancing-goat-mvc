@@ -13,7 +13,7 @@
                 <div class="cafe-image-tile-image-wrapper">
                     @if (cafe.Photo != null)
                     {
-                        <img alt="Cafe @cafe.Contact.Name" src="@Url.Kentico().Attachment(cafe.Photo)" class="cafe-image-tile-image">
+                        @Html.AttachmentImage(cafe.Photo, "Cafe " + cafe.Contact.Name, "cafe-image-tile-image")
                     }
                 </div>
                 <div class="cafe-image-tile-content">

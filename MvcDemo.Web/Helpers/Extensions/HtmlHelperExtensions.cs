@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Text;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 
+using CMS.DocumentEngine;
 using CMS.Helpers;
+
+using Kentico.Web.Mvc;
 
 namespace MvcDemo.Web.Helpers
 {
@@ -50,6 +51,32 @@ namespace MvcDemo.Web.Helpers
             var link = string.Format("<a href=\"mailto:{0}\">{1}</a>", HTMLHelper.EncodeForHtmlAttribute(email), HTMLHelper.HTMLEncode(email));
 
             return MvcHtmlString.Create(link);
+        }
+
+
+        /// <summary>
+        /// Generates IMG tag for attachment.
+        /// </summary>
+        /// <param name="htmlHelper">HTML helper</param>
+        /// <param name="attachment">Attachment object</param>
+        /// <param name="title">Title</param>
+        /// <param name="cssClassName">CSS class</param>
+        /// <param name="constraint">Size constraint</param>
+        public static MvcHtmlString AttachmentImage(this HtmlHelper htmlHelper, Attachment attachment, string title = "", string cssClassName = "", SizeConstraint? constraint = null)
+        {
+            if (attachment == null)
+            {
+                return MvcHtmlString.Empty;
+            }
+
+            var urlHelper = new UrlHelper(htmlHelper.ViewContext.RequestContext);
+            var image = new TagBuilder("img");
+            image.MergeAttribute("src", urlHelper.Kentico().Attachment(attachment, constraint.GetValueOrDefault(SizeConstraint.Empty)));
+            image.AddCssClass(cssClassName);
+            image.MergeAttribute("alt", title);
+            image.MergeAttribute("title", title);
+
+            return MvcHtmlString.Create(image.ToString(TagRenderMode.SelfClosing));
         }
     }
 }

@@ -7,8 +7,10 @@ using CMS.DocumentEngine.Types;
 using CMS.Tests;
 
 using MvcDemo.Web.Controllers;
+using MvcDemo.Web.Infrastructure;
 using MvcDemo.Web.Repositories;
 using MvcDemo.Web.Tests.Extensions;
+
 using NSubstitute;
 using NUnit.Framework;
 using TestStack.FluentMVCTesting;
@@ -20,6 +22,7 @@ namespace MvcDemo.Web.Tests.Unit
     {
         private ArticlesController mController;
         private Article mArticle;
+        private IOutputCacheDependencies mDependencies;
         private string mDocumentName = "Article1";
 
 
@@ -28,11 +31,12 @@ namespace MvcDemo.Web.Tests.Unit
         {
             Fake().DocumentType<Article>(Article.CLASS_NAME);
             mArticle = TreeNode.New<Article>().With(a => a.DocumentName = mDocumentName);
+            mDependencies = Substitute.For<IOutputCacheDependencies>();
             
-            var repository = Substitute.For<ArticleRepository>();
+            var repository = Substitute.For<IArticleRepository>();
             repository.GetArticle(1).Returns(mArticle);
             
-            mController = new ArticlesController(repository);
+            mController = new ArticlesController(repository, mDependencies);
         }
 
 

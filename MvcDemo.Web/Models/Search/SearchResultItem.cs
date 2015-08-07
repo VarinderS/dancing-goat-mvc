@@ -41,7 +41,7 @@ namespace MvcDemo.Web.Models.Search
         }
 
 
-        public int DocumentId
+        public int NodeId
         {
             get;
             set;

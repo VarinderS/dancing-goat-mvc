@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using CMS.DocumentEngine.Types;
 
@@ -7,10 +8,11 @@ namespace MvcDemo.Web.Repositories.Implementation
     /// <summary>
     /// Represents a collection of links to social networks.
     /// </summary>
-    public class KenticoSocialLinkRepository : SocialLinkRepository
+    public class KenticoSocialLinkRepository : ISocialLinkRepository
     {
         private readonly string mSiteName;
         private readonly string mCultureName;
+        private readonly bool mLatestVersionEnabled;
 
 
         /// <summary>
@@ -18,10 +20,12 @@ namespace MvcDemo.Web.Repositories.Implementation
         /// </summary>
         /// <param name="siteName">The code name of a site.</param>
         /// <param name="cultureName">The name of a culture.</param>
-        public KenticoSocialLinkRepository(string siteName, string cultureName)
+        /// <param name="latestVersionEnabled">Indicates whether the repository will provide the most recent version of pages.</param>
+        public KenticoSocialLinkRepository(string siteName, string cultureName, bool latestVersionEnabled)
         {
             mSiteName = siteName;
             mCultureName = cultureName;
+            mLatestVersionEnabled = latestVersionEnabled;
         }
 
 
@@ -29,9 +33,11 @@ namespace MvcDemo.Web.Repositories.Implementation
         /// Returns an enumerable collection of links to social networks ordered by a position in the content tree.
         /// </summary>
         /// <returns>An enumerable collection of links to social networks ordered by a position in the content tree.</returns>
-        public override IEnumerable<SocialLink> GetSocialLinks()
+        public IEnumerable<SocialLink> GetSocialLinks()
         {
             return SocialLinkProvider.GetSocialLinks()
+                .LatestVersion(mLatestVersionEnabled)
+                .Published(!mLatestVersionEnabled)
                 .OnSite(mSiteName)
                 .Culture(mCultureName)
                 .OrderByAscending("NodeOrder");

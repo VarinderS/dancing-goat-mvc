@@ -4,7 +4,9 @@ using System.Web.Mvc;
 
 using CMS.Base;
 using CMS.DocumentEngine.Types;
+using CMS.Globalization;
 
+using MvcDemo.Web.Infrastructure;
 using MvcDemo.Web.Models.Cafes;
 using MvcDemo.Web.Models.Contacts;
 using MvcDemo.Web.Repositories;
@@ -14,34 +16,39 @@ namespace MvcDemo.Web.Controllers
 {
     public class CafesController : Controller
     {
-        private readonly CafeRepository mCafeRepository;
-        private readonly CountryRepository mCountryRepository;
+        private readonly ICafeRepository mCafeRepository;
+        private readonly ICountryRepository mCountryRepository;
         private readonly LocalizationService mLocalizationService;
+        private readonly IOutputCacheDependencies mOutputCacheDependencies;
 
 
-        public CafesController(CafeRepository cafeRepository, CountryRepository countryRepository, LocalizationService localizationService)
+        public CafesController(ICafeRepository cafeRepository, ICountryRepository countryRepository, LocalizationService localizationService, IOutputCacheDependencies outputCacheDependencies)
         {
             mLocalizationService = localizationService;
             mCountryRepository = countryRepository;
             mCafeRepository = cafeRepository;
+            mOutputCacheDependencies = outputCacheDependencies;
         }
 
 
         // GET: Cafes
+        [OutputCache(CacheProfile = "Default", VaryByParam = "none")]
         public ActionResult Index()
         {
             var companyCafes = mCafeRepository.GetCompanyCafes(4);
-
-            var viewModel = new Models.Cafes.IndexViewModel
-            {
-                CompanyCafes = GetCompanyCafesModel(companyCafes)
-            };
-
             var partnerCafes = mCafeRepository.GetPartnerCafes();
 
-            viewModel.PartnerCafes = GetPartnerCafesModel(partnerCafes);
+            var model = new Models.Cafes.IndexViewModel
+            {
+                CompanyCafes = GetCompanyCafesModel(companyCafes),
+                PartnerCafes = GetPartnerCafesModel(partnerCafes)
+            };
 
-            return View(viewModel);
+            mOutputCacheDependencies.AddDependencyOnPages<Cafe>();
+            mOutputCacheDependencies.AddDependencyOnInfoObjects<CountryInfo>();
+            mOutputCacheDependencies.AddDependencyOnInfoObjects<StateInfo>();
+
+            return View(model);
         }
 
 
@@ -73,8 +80,8 @@ namespace MvcDemo.Web.Controllers
         {
             return cafes.Select(cafe => new CafeModel
             {
-                Photo = cafe.CafePhoto,
-                Note = cafe.CafeAdditionalNotes,
+                Photo = cafe.Fields.Photo,
+                Note = cafe.Fields.AdditionalNotes,
                 Contact = CreateContactModel(cafe)
             });
         }
